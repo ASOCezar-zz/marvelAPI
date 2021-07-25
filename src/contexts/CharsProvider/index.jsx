@@ -10,7 +10,7 @@ export const CharsProvider = ({ children }) => {
   const [characters, setCharacters] = useState([]);
 
   useEffect(() => {
-    fetch(`http://gateway.marvel.com/v1/public/characters?ts=${timestamps}&apikey=${publicKey}&hash=${md5}&limit=30`, {
+    fetch(`https://gateway.marvel.com/v1/public/characters?ts=${timestamps}&apikey=${publicKey}&hash=${md5}&limit=30`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
