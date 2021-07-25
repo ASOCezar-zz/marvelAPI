@@ -46,7 +46,7 @@ export const Modal = () => {
         <ComicsContent>
           {comics ? (
             <>
-              <img src={comics[0][0][1]?.path + '.' + comics[0]?.png} />
+              <img src={comics[0]?.path + '.' + comics[0]?.png} />
               <img src={comics[1]?.path + '.' + comics[1]?.png} />
             </>
           ) : (
