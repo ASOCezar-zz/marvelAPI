@@ -67,7 +67,7 @@ const Container = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1;
 
-  display: fixed;
+  display: none;
   justify-content: center;
   align-items: center;
 }
