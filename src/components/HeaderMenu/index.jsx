@@ -20,7 +20,10 @@ export const HeaderMenu = () => {
 
 const Div = styled.div`
   background-color: black;
+  position: fixed;
+  grid-area: header;
   height: 40px;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

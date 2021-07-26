@@ -1,23 +1,33 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
+
 import { CharsContext } from '../../contexts/CharsProvider/context';
-import { ClickedChar } from '../../contexts/ClickedCharProvider/context';
+import { ClickedCharContext } from '../../contexts/ClickedCharProvider/context';
+import { ModalOpenContext } from '../../contexts/ModalOpenProvider/context';
 import { CardsWrapper } from '../CardsWrapper/index';
-import { Modal } from '../Modal';
 
 export const Cards = () => {
   const charsContext = useContext(CharsContext);
   const { characters } = charsContext;
-  const clickedCharContext = useContext(ClickedChar);
+
+  const clickedCharContext = useContext(ClickedCharContext);
   const { setClickedChar } = clickedCharContext;
+
+  const modalContext = useContext(ModalOpenContext);
+  const { isModalOpen, setIsModalOpen } = modalContext;
 
   return (
     <>
-      <Modal />
-      <CardsWrapper>
+      <CardsWrapper isModalOpen={isModalOpen}>
         {characters.map((char) => {
           return (
-            <Div key={char.id} onClick={() => setClickedChar(char)}>
+            <Div
+              key={char.id}
+              onClick={() => {
+                setClickedChar(char);
+                setIsModalOpen(true);
+              }}
+            >
               <div className="image">
                 <img src={char.thumbnail.path + '.' + char.thumbnail.extension} />
               </div>
@@ -67,6 +77,8 @@ export const Cards = () => {
 
 const Div = styled.div`
   background-color: white;
+  background-position: top center;
+  background-size: cover;
 
   display: flex;
   flex-direction: column;

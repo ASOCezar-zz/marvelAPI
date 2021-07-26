@@ -4,10 +4,10 @@ import image from '../../icons/Vector_search_icon.svg';
 export const InputSearch = () => {
   return (
     <Input>
+      <input type="text" placeholder="Search..." />
       <div className="image">
         <img src={image} />
       </div>
-      <input type="text" placeholder="Search..." />
     </Input>
   );
 };
@@ -16,6 +16,7 @@ const Input = styled.div`
   background-color: #980000;
   border-radius: 25px;
   padding: 0;
+  margin-right: 50px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

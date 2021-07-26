@@ -5,8 +5,17 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  box-sizing: border-box;
+  background-image: url('../src/icons/background.jfif');
   padding: 0;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: auto;
+  grid-template-areas: 
+    "header "
+    "main "
+    "footer ";
+
+  align-items: start;
 }
 
 code {

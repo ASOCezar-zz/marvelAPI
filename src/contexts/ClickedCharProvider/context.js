@@ -1,3 +1,3 @@
 import { createContext } from 'react';
 
-export const ClickedChar = createContext();
+export const ClickedCharContext = createContext();

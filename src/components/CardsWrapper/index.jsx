@@ -1,13 +1,38 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const scaleBack = keyframes`
+  from {
+    transform: scale(1)
+  }
+
+  to {
+    transform: scale(0.9)
+  }
+`;
+
+const scaleForward = keyframes`
+  from {
+    transform: scale(0.9)
+  }
+
+  to {
+    transform: scale(1)
+  }
+`;
 
 export const CardsWrapper = styled.div`
   background-image: linear-gradient(180deg, #980000, black);
 
-  padding: 5px;
+  height: 100%;
   display: grid;
-  grid-template-columns: 150px 150px;
-  justify-content: center;
   gap: 10px;
+
+  margin-top: 70px;
+
+  align-items: center;
+  justify-content: space-evenly;
+
+  grid-area: main;
 
   font-family: sans-serif;
 
@@ -17,8 +42,12 @@ export const CardsWrapper = styled.div`
   }
   @media (max-width: 1350px) {
     grid-template-columns: 1fr 1fr 1fr;
+    padding-left: 60px;
   }
   @media (max-width: 1000px) {
     grid-template-columns: 1fr 1fr;
   }
+
+  animation: ${(props) => (props.isModalOpen ? scaleBack : scaleForward)} 0.5s cubic-bezier(0.165, 0.84, 0.44, 1)
+    forwards;
 `;
