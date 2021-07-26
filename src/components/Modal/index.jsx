@@ -6,23 +6,18 @@ import { ModalOpenContext } from '../../contexts/ModalOpenProvider/context';
 
 export const Modal = () => {
   const clickedCharContext = useContext(ClickedCharContext);
-  const { clickedChar } = clickedCharContext;
-  const [comics, setComics] = useState({});
+  const { clickedChar, setClickedChar } = clickedCharContext;
 
   const modalOpenContext = useContext(ModalOpenContext);
   const { isModalOpen, setIsModalOpen } = modalOpenContext;
 
+  const [description, setDescription] = useState('');
+
   useEffect(() => {
-    fetch(
-      clickedChar.comics?.items[0].resourceURI +
-        '?ts=1627160343&apikey=bcc7616374e3d240e7270653f1b2b599&hash=8238c0c73920dc83cfe09aec0b169d26',
-    )
-      .then((res) => res.json())
-      .then((res) => setComics((c) => [c, res.data.results[0].thumbnail.path]))
-      .catch((err) => console.error(err.message));
+    setDescription(clickedChar.description);
   }, [clickedChar, setIsModalOpen]);
 
-  console.log(isModalOpen);
+  console.log(clickedChar);
 
   const contentProps = useSpring({
     opacity: isModalOpen ? 1 : 0,
@@ -37,22 +32,23 @@ export const Modal = () => {
 
   return (
     <Container isModalOpen={isModalOpen}>
-      <animated.div style={contentProps} className="background" onClick={() => setIsModalOpen(false)}>
+      <animated.div
+        style={contentProps}
+        className="background"
+        onClick={() => {
+          setIsModalOpen(false);
+          setClickedChar([]);
+        }}
+      >
         <animated.div style={rotation} className="content" isModalOpen={isModalOpen}>
           <ImageDiv>
             <img src={clickedChar.thumbnail?.path + '.' + clickedChar.thumbnail?.extension} />
           </ImageDiv>
           <h3> {clickedChar.name} </h3>
-          <h3> Comics </h3>
-          <ComicsContent>
-            {comics ? (
-              <>
-                <img src={comics[0]?.path + '.' + comics[0]?.png} />
-              </>
-            ) : (
-              <></>
-            )}
-          </ComicsContent>
+          <h3> Descrição </h3>
+          <DescriptionContent>
+            <p> {description} </p>
+          </DescriptionContent>
         </animated.div>
       </animated.div>
     </Container>
@@ -111,12 +107,9 @@ const ImageDiv = styled.div`
   }
 `;
 
-const ComicsContent = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-
-  img {
-    width: 100%;
-    height: 100%;
+const DescriptionContent = styled.div`
+  display: flex;
+  @media (max-width: 450px) {
+    font-size: 10pt;
   }
 `;

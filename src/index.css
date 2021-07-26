@@ -14,7 +14,7 @@ body {
   grid-template-rows: auto;
   grid-template-areas: 
     "header "
-    "main ."
+    "main"
     "footer ";
 }
 
