@@ -29,8 +29,7 @@ export const CardsWrapper = styled.div`
 
   margin-top: 70px;
 
-  align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
 
   grid-area: main;
 

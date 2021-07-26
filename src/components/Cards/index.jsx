@@ -58,13 +58,6 @@ export const Cards = () => {
                   ) : (
                     <p></p>
                   )}
-                  {char.stories.items[3] ? (
-                    <li>
-                      <a href={char.stories.items[3].resourceURI}>{char.stories.items[3].name}</a>
-                    </li>
-                  ) : (
-                    <p></p>
-                  )}
                 </ul>
               </div>
             </Div>
@@ -79,11 +72,6 @@ const Div = styled.div`
   background-color: white;
   background-position: top center;
   background-size: cover;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 
   border-radius: 15px;
   padding: 8px;
@@ -100,11 +88,18 @@ const Div = styled.div`
   }
 
   img {
-    height: 140px;
-    width: 140px;
+    min-height: 100px;
+    min-width: 100px;
+    max-height: 100px;
+    max-width: 100px;
+
     border-radius: 10px;
 
     @media (min-width: 680px) {
+      min-height: 240px;
+      min-width: 240px;
+      max-height: 240px;
+      max-width: 240px;
       height: 200px;
       width: 200px;
       transition: transform 0.3s linear;
@@ -114,6 +109,14 @@ const Div = styled.div`
   hr {
     border: 1px solid #980000;
     width: 100%;
+  }
+
+  .image {
+    height: auto;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .title {
@@ -126,7 +129,12 @@ const Div = styled.div`
   }
 
   .content {
+    @media (max-width: 450px) {
+      display: none;
+    }
     width: 100%;
+    min-height: 140px;
+    max-height: 140px;
     margin: 5px;
     display: flex;
     text-align: left;

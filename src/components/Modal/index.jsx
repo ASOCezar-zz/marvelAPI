@@ -61,13 +61,14 @@ export const Modal = () => {
 
 const Container = styled.div`
   position: fixed;
-  display: ${(props) => (props.isModalOpen ? 'table' : 'none')}
+  display: ${(props) => (props.isModalOpen ? 'flex' : 'none')}
   height: 100%;
   width: 100%;
   z-index: 1;
+  justify-content: center;
 
   .background {
-    height: 500%;
+    height: 100%;
     width: 100%;
     background: rgba(0, 0, 0, 0.5);
     display: flex;
@@ -80,6 +81,14 @@ const Container = styled.div`
   background-image: linear-gradient(180deg, #980000, white);
   height: 500px;
   width: 350px;
+
+  @media(max-width: 450px){
+    height: 450px;
+    width: 250px;
+    align-self: center;
+    margin-bottom: 370px;
+    position: absolute;
+  }
 
   display: flex;
   flex-direction: column;
