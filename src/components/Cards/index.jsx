@@ -90,8 +90,8 @@ const Div = styled.div`
   transition: transform 0.3s linear;
 
   @media (min-width: 680px) {
-    height: 450px;
-    width: 300px;
+    min-height: 450px;
+    min-width: 300px;
     justify-content: normal;
   }
 
@@ -100,13 +100,13 @@ const Div = styled.div`
   }
 
   img {
-    height: 140px;
-    width: 140px;
+    min-height: 140px;
+    min-width: 140px;
     border-radius: 10px;
 
     @media (min-width: 680px) {
-      height: 200px;
-      width: 200px;
+      min-height: 200px;
+      min-width: 200px;
       transition: transform 0.3s linear;
     }
   }
