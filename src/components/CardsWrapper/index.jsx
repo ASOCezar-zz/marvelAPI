@@ -20,6 +20,23 @@ const scaleForward = keyframes`
   }
 `;
 
+const pulsing = keyframes`
+  0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(247, 3, 3, 0.7);
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 10px rgba(247, 3, 3, 0);
+	}
+
+	100% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(247, 3, 3, 0);
+	}
+`;
+
 export const CardsWrapper = styled.div`
   background-image: linear-gradient(180deg, #980000, black);
 
@@ -49,4 +66,18 @@ export const CardsWrapper = styled.div`
 
   animation: ${(props) => (props.isModalOpen ? scaleBack : scaleForward)} 0.5s cubic-bezier(0.165, 0.84, 0.44, 1)
     forwards;
+
+  #loading {
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    display: flex;
+    width: 200%;
+    position: relative;
+
+    img {
+      animation: ${pulsing} 1s infinite;
+      border-radius: 100px;
+    }
+  }
 `;

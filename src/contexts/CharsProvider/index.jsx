@@ -8,20 +8,24 @@ export const CharsProvider = ({ children }) => {
   const md5 = '8238c0c73920dc83cfe09aec0b169d26';
 
   const [characters, setCharacters] = useState([]);
+  const [limit, setLimit] = useState(20);
 
   useEffect(() => {
-    fetch(`https://gateway.marvel.com/v1/public/characters?ts=${timestamps}&apikey=${publicKey}&hash=${md5}&limit=30`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
+    fetch(
+      `https://gateway.marvel.com/v1/public/characters?ts=${timestamps}&apikey=${publicKey}&hash=${md5}&limit=${limit}`,
+      {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+        },
       },
-    })
+    )
       .then((res) => res.json())
       .then((res) => setCharacters(res.data.results))
       .catch((err) => console.error(err));
-  }, []);
+  }, [limit]);
 
-  return <CharsContext.Provider value={{ characters }}>{children}</CharsContext.Provider>;
+  return <CharsContext.Provider value={{ characters, limit, setLimit }}>{children}</CharsContext.Provider>;
 };
 
 CharsProvider.propTypes = {
