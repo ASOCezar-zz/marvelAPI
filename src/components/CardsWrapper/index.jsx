@@ -42,7 +42,6 @@ export const CardsWrapper = styled.div`
 
   height: 100%;
   display: grid;
-  gap: 10px;
 
   margin-top: 70px;
 
@@ -52,28 +51,31 @@ export const CardsWrapper = styled.div`
 
   font-family: sans-serif;
 
-  @media (max-width: 1920px) {
+  @media (min-width: 1025px) {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     padding: 20px;
+    justify-items: center;
   }
-  @media (max-width: 1350px) {
+  @media (max-width: 1024px) {
     grid-template-columns: 1fr 1fr 1fr;
-    padding-left: 60px;
+    grid-auto-rows: 500px;
+    padding: 20px;
+    justify-items: center;
   }
-  @media (max-width: 1000px) {
+  @media (max-width: 767px) {
     grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 250px;
+    justify-items: center;
+    gap: 15px;
+    align-items: center;
   }
 
   animation: ${(props) => (props.isModalOpen ? scaleBack : scaleForward)} 0.5s cubic-bezier(0.165, 0.84, 0.44, 1)
     forwards;
 
-  #loading {
-    align-items: center;
-    justify-content: center;
-    align-self: center;
-    display: flex;
-    width: 200%;
-    position: relative;
+  .loading {
+    position: absolute;
+    bottom: 0;
 
     img {
       animation: ${pulsing} 1s infinite;

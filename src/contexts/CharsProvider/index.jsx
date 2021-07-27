@@ -25,7 +25,11 @@ export const CharsProvider = ({ children }) => {
       .catch((err) => console.error(err));
   }, [limit]);
 
-  return <CharsContext.Provider value={{ characters, limit, setLimit }}>{children}</CharsContext.Provider>;
+  return (
+    <CharsContext.Provider value={{ characters, limit, setLimit, timestamps, publicKey, md5 }}>
+      {children}
+    </CharsContext.Provider>
+  );
 };
 
 CharsProvider.propTypes = {

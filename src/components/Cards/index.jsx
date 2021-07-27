@@ -23,7 +23,7 @@ export const Cards = () => {
   useEffect(() => {
     const intersectionObserver = new IntersectionObserver((entries) => {
       if (entries.some((entry) => entry.isIntersecting)) {
-        charsContext.setLimit((prevState) => prevState + 20);
+        charsContext.setLimit((prevState) => prevState);
       }
     });
 
@@ -48,39 +48,13 @@ export const Cards = () => {
               <div className="image">
                 <img src={char.thumbnail.path + '.' + char.thumbnail.extension} />
               </div>
-              <hr />
               <div className="title">
                 <h1> {char.name} </h1>
-              </div>
-              <div className="content">
-                <ul>
-                  {char.stories.items[0] ? (
-                    <li>
-                      <a href={char.stories.items[0].resourceURI}>{char.stories.items[0]?.name}</a>
-                    </li>
-                  ) : (
-                    <p></p>
-                  )}
-                  {char.stories.items[1] ? (
-                    <li>
-                      <a href={char.stories.items[1].resourceURI}>{char.stories.items[1].name}</a>
-                    </li>
-                  ) : (
-                    <p></p>
-                  )}
-                  {char.stories.items[2] ? (
-                    <li>
-                      <a href={char.stories.items[2].resourceURI}>{char.stories.items[2].name}</a>
-                    </li>
-                  ) : (
-                    <p></p>
-                  )}
-                </ul>
               </div>
             </Div>
           );
         })}
-        <div id="loading" ref={sentinel}>
+        <div className="loading" ref={sentinel}>
           <img src={loadingIcon} style={{ width: '90px', height: '90px' }} />
         </div>
       </CardsWrapper>
@@ -92,73 +66,58 @@ const Div = styled.div`
   background-color: white;
   background-position: top center;
   background-size: cover;
+  position: relative;
 
   border-radius: 15px;
-  padding: 8px;
   transition: transform 0.3s linear;
 
-  @media (min-width: 680px) {
-    height: 450px;
-    width: 300px;
-    justify-content: normal;
+  @media (min-width: 1025px) {
   }
-
-  &:hover {
-    transform: scale(1.05);
+  @media (max-width: 1024px) {
   }
+  @media (max-width: 768px) {
+    max-height: 450px;
+    height: 100%;
+    max-width: 90%;
+    width: 100%;
+  }
+  @media (max-width: 425px) {
+    max-height: 250px;
+    height: 100%;
+    max-width: 100%;
 
-  img {
-    min-height: 100px;
-    min-width: 100px;
-    max-height: 100px;
-    max-width: 100px;
+    .image {
+      -webkit-align-items: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      justify-items: center;
+      max-height: 170px;
+      height: 100%;
+    }
 
-    border-radius: 10px;
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+    }
 
-    @media (min-width: 680px) {
-      min-height: 240px;
-      min-width: 240px;
-      max-height: 240px;
-      max-width: 240px;
-      height: 200px;
-      width: 200px;
-      transition: transform 0.3s linear;
+    .title {
+      position: relative;
+      display: flex;
+      text-align: center;
+      justify-content: center;
+      font-size: 8px;
+      background-color: white;
+      border-radius: 0 0 20px 20px;
     }
   }
 
   hr {
     border: 1px solid #980000;
     width: 100%;
-  }
-
-  .image {
-    height: auto;
-    width: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .title {
-    width: 100%;
-    margin: 5px;
-    display: flex;
-    text-align: left;
-
-    font-size: 7pt;
-  }
-
-  .content {
-    @media (max-width: 450px) {
-      display: none;
-    }
-    width: 100%;
-    min-height: 140px;
-    max-height: 140px;
-    margin: 5px;
-    display: flex;
-    text-align: left;
-
-    color: #980000;
   }
 `;

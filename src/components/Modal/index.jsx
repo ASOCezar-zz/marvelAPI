@@ -3,25 +3,32 @@ import styled from 'styled-components';
 import { animated, useSpring } from 'react-spring';
 import { ClickedCharContext } from '../../contexts/ClickedCharProvider/context';
 import { ModalOpenContext } from '../../contexts/ModalOpenProvider/context';
+import { CharsContext } from '../../contexts/CharsProvider/context';
 
 export const Modal = () => {
   const clickedCharContext = useContext(ClickedCharContext);
   const { clickedChar, setClickedChar } = clickedCharContext;
 
+  const charsContext = useContext(CharsContext);
+  const { timestamps, publicKey, md5 } = charsContext;
+
   const modalOpenContext = useContext(ModalOpenContext);
   const { isModalOpen, setIsModalOpen } = modalOpenContext;
 
-  const [description, setDescription] = useState('');
+  const [comics, setComics] = useState([]);
 
   useEffect(() => {
-    setDescription(clickedChar.description);
-  }, [clickedChar, setIsModalOpen]);
-
-  console.log(clickedChar);
+    clickedChar.comics?.items.map((item) => {
+      fetch(`${item.resourceURI}?ts=${timestamps}&apikey=${publicKey}&hash=${md5}`)
+        .then((res) => res.json())
+        .then((res) => setComics((prevState) => [...prevState, res.data.results[0].thumbnail]));
+    });
+    //eslint-disable-next-line
+  }, [clickedChar]);
 
   const contentProps = useSpring({
     opacity: isModalOpen ? 1 : 0,
-    height: isModalOpen ? 930 : 0,
+    height: isModalOpen ? 1000 : 0,
     marginTop: isModalOpen ? 70 : 0,
   });
 
@@ -44,11 +51,15 @@ export const Modal = () => {
           <ImageDiv>
             <img src={clickedChar.thumbnail?.path + '.' + clickedChar.thumbnail?.extension} />
           </ImageDiv>
-          <h3> {clickedChar.name} </h3>
-          <h3> Descrição </h3>
-          <DescriptionContent>
-            <p> {description} </p>
-          </DescriptionContent>
+          <H3> {clickedChar.name} </H3>
+          <h4> Comics </h4>
+          <Comics>
+            {comics.map((comic, index) => {
+              if (index <= 8) {
+                return <img src={comic.path + '.' + comic.extension} />;
+              }
+            })}
+          </Comics>
         </animated.div>
       </animated.div>
     </Container>
@@ -72,17 +83,35 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
   }
+  h4 {
+    color: white;
+    font-size: 22px;
+    @media (max-width: 767px){
+      margin: 0;
+    }
+  }
 
   .content {
-  background-image: linear-gradient(180deg, #980000, white);
-  height: 500px;
+    background-image: linear-gradient(
+180deg
+,#980000,#ed1a23, #000);
+  height: 700px;
   width: 350px;
+  border-radius: 8px;
 
   @media(max-width: 450px){
-    height: 450px;
+    height: 550px;
     width: 250px;
     align-self: center;
-    margin-bottom: 370px;
+    margin-bottom: 200px;
+    position: absolute;
+  }
+
+  @media(min-width:768px){
+    height: 750px;
+    width: 80%;
+    align-self: center;
+    margin-bottom: 170px;
     position: absolute;
   }
 
@@ -96,9 +125,21 @@ const Container = styled.div`
   }
 `;
 
+const H3 = styled('h3')`
+  margin-top: 105px;
+  color: white;
+  font-size: 26px;
+`;
+
 const ImageDiv = styled.div`
-  width: 200px;
-  height: 200px;
+  @media (max-width: 767px) {
+    width: 200px;
+    height: 200px;
+    top: -100px;
+    position: absolute;
+    box-shadow: 6px 9px 18px 1px;
+    border-radius: 100px;
+  }
 
   img {
     width: 100%;
@@ -107,9 +148,38 @@ const ImageDiv = styled.div`
   }
 `;
 
-const DescriptionContent = styled.div`
-  display: flex;
-  @media (max-width: 450px) {
-    font-size: 10pt;
+const Comics = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 50px);
+  grid-template-rows: repeat(2, 100px);
+  img:nth-child(n + 7) {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 130px);
+    gap: 10px;
+    justify-items: center;
+    align-items: center;
+    margin-top: 30px;
+    img:nth-child(n + 7) {
+      display: none;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  img {
+    max-width: 50px;
+    max-height: 100px;
+
+    @media (max-width: 768px) {
+      max-width: 150px;
+      max-height: 210px;
+    }
   }
 `;

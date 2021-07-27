@@ -21,6 +21,10 @@ const Input = styled.div`
   flex-direction: row;
   justify-content: space-between;
 
+  @media (max-width: 450px) {
+    margin: 20px;
+  }
+
   .image {
     padding: 10px;
     border-radius: 100%;
@@ -35,9 +39,13 @@ const Input = styled.div`
     background-image: ${image};
     background-repeat: no-repeat;
     border-radius: 5px;
+    outline: none;
 
     height: 45px;
     width: 100px;
+    @media (max-width: 450px) {
+      width: 50px;
+    }
     box-sizing: border-box;
 
     transition: width 0.4s ease-in-out;
@@ -50,7 +58,7 @@ const Input = styled.div`
     @media (max-width: 450px) {
       &:focus {
         border: none;
-        width: 150px;
+        width: 100px;
       }
     }
 
