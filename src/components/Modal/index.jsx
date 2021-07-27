@@ -19,7 +19,9 @@ export const Modal = () => {
 
   useEffect(() => {
     clickedChar.comics?.items.map((item) => {
-      fetch(`${item.resourceURI}?ts=${timestamps}&apikey=${publicKey}&hash=${md5}`)
+      const URI = item.resourceURI.replace('http', 'https');
+      console.log(URI);
+      fetch(`${URI}?ts=${timestamps}&apikey=${publicKey}&hash=${md5}`)
         .then((res) => res.json())
         .then((res) => setComics((prevState) => [...prevState, res.data.results[0].thumbnail]));
     });

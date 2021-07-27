@@ -12,7 +12,7 @@ export const CharsProvider = ({ children }) => {
 
   useEffect(() => {
     fetch(
-      `http://gateway.marvel.com/v1/public/characters?ts=${timestamps}&apikey=${publicKey}&hash=${md5}&limit=${limit}`,
+      `https://gateway.marvel.com/v1/public/characters?ts=${timestamps}&apikey=${publicKey}&hash=${md5}&limit=${limit}`,
       {
         method: 'GET',
         headers: {
