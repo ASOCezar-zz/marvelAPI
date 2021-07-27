@@ -23,7 +23,7 @@ export const Cards = () => {
   useEffect(() => {
     const intersectionObserver = new IntersectionObserver((entries) => {
       if (entries.some((entry) => entry.isIntersecting)) {
-        charsContext.setLimit((prevState) => prevState);
+        charsContext.setLimit((prevState) => prevState + 20);
       }
     });
 
