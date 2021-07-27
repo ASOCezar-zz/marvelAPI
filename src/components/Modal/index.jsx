@@ -46,6 +46,7 @@ export const Modal = () => {
         onClick={() => {
           setIsModalOpen(false);
           setClickedChar([]);
+          setComics([]);
         }}
       >
         <animated.div style={rotation} className="content" isModalOpen={isModalOpen}>
