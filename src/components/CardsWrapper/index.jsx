@@ -52,21 +52,31 @@ export const CardsWrapper = styled.div`
   font-family: sans-serif;
 
   @media (min-width: 1025px) {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    padding: 20px;
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: 361px;
+    gap: 50px;
+    padding: 40px;
     justify-items: center;
   }
   @media (max-width: 1024px) {
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-auto-rows: 500px;
-    padding: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 350px;
+    gap: 15px;
+    padding: 10px;
     justify-items: center;
   }
-  @media (max-width: 767px) {
-    grid-template-columns: 1fr 1fr;
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
     grid-auto-rows: 250px;
     justify-items: center;
-    gap: 15px;
+    gap: 30px;
+    align-items: center;
+  }
+  @media (max-width: 425px) {
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 200px;
+    justify-items: center;
+    gap: 5px;
     align-items: center;
   }
 

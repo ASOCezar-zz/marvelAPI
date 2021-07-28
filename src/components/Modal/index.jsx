@@ -18,11 +18,13 @@ export const Modal = () => {
   const [comics, setComics] = useState([]);
 
   useEffect(() => {
-    clickedChar.comics?.items.map((item) => {
+    clickedChar.comics?.items.map((item, index) => {
       const URI = item.resourceURI.replace('http', 'https');
-      fetch(`${URI}?ts=${timestamps}&apikey=${publicKey}&hash=${md5}`)
-        .then((res) => res.json())
-        .then((res) => setComics((prevState) => [...prevState, res.data.results[0].thumbnail]));
+      if (index <= 11) {
+        fetch(`${URI}?ts=${timestamps}&apikey=${publicKey}&hash=${md5}`)
+          .then((res) => res.json())
+          .then((res) => setComics((prevState) => [...prevState, res.data.results[0].thumbnail]));
+      }
     });
     //eslint-disable-next-line
   }, [clickedChar]);
@@ -91,6 +93,11 @@ const Container = styled.div`
     @media (max-width: 767px){
       margin: 0;
     }
+    @media (min-width: 1025px){
+      margin-top: 0;
+    color: white;
+    font-size: 30px;
+    }
   }
 
   .content {
@@ -101,7 +108,14 @@ const Container = styled.div`
   width: 350px;
   border-radius: 8px;
 
-  @media(max-width: 450px){
+  @media (min-width: 1025px){
+    height: 750px;
+    width: 70%;
+    margin-bottom: -5px;
+    position: absolute;
+  }
+
+  @media(max-width: 767px){
     height: 550px;
     width: 250px;
     align-self: center;
@@ -109,11 +123,10 @@ const Container = styled.div`
     position: absolute;
   }
 
-  @media(min-width:768px){
-    height: 750px;
+  @media(max-width:1024px){
+    height: 650px;
     width: 80%;
-    align-self: center;
-    margin-bottom: 170px;
+    margin-bottom: 110px;
     position: absolute;
   }
 
@@ -131,9 +144,29 @@ const H3 = styled('h3')`
   margin-top: 105px;
   color: white;
   font-size: 26px;
+  @media (min-width: 1025px) {
+    margin-top: 146px;
+  }
 `;
 
 const ImageDiv = styled.div`
+  @media (min-width: 1025px) {
+    width: 240px;
+    height: 240px;
+    top: -110px;
+    position: absolute;
+    box-shadow: 6px 9px 18px 1px;
+    border-radius: 120px;
+  }
+  @media (max-width: 1024px) {
+    width: 200px;
+    height: 200px;
+    top: -100px;
+    position: absolute;
+    box-shadow: 6px 9px 18px 1px;
+    border-radius: 100px;
+  }
+
   @media (max-width: 767px) {
     width: 200px;
     height: 200px;
@@ -154,8 +187,33 @@ const Comics = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 50px);
   grid-template-rows: repeat(2, 100px);
-  img:nth-child(n + 7) {
-    display: none;
+
+  @media (min-width: 1025px) {
+    grid-template-columns: repeat(6, 148px);
+    grid-template-rows: repeat(2, 185px);
+    gap: 65px;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+    img:nth-child(n + 13) {
+      display: none;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(3, 148px);
+    grid-template-rows: repeat(2, 185px);
+    gap: 33px;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+    img:nth-child(n + 7) {
+      display: none;
+    }
   }
 
   @media (max-width: 767px) {
@@ -172,16 +230,6 @@ const Comics = styled.div`
     img {
       width: 100%;
       height: 100%;
-    }
-  }
-
-  img {
-    max-width: 50px;
-    max-height: 100px;
-
-    @media (max-width: 768px) {
-      max-width: 150px;
-      max-height: 210px;
     }
   }
 `;

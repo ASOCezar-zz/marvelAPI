@@ -48,8 +48,13 @@ export const Cards = () => {
               <div className="image">
                 <img src={char.thumbnail.path + '.' + char.thumbnail.extension} />
               </div>
-              <div className="title">
-                <h1> {char.name} </h1>
+              <div className="nameDescriptionWrapper">
+                <div className="title">
+                  <h1> {char.name} </h1>
+                </div>
+                <div className="description">
+                  <span>{char.description}</span>
+                </div>
               </div>
             </Div>
           );
@@ -67,20 +72,127 @@ const Div = styled.div`
   background-position: top center;
   background-size: cover;
   position: relative;
+  cursor: pointer;
 
   border-radius: 15px;
-  transition: transform 0.3s linear;
+
+  .nameDescriptionWrapper {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 100%;
+    background-color: white;
+    animation: height 1s linear;
+    .description {
+      display: none;
+    }
+  }
+
+  .image {
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    justify-items: center;
+  }
 
   @media (min-width: 1025px) {
+    height: 100%;
+    width: 100%;
+    .image {
+      height: 300px;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+    }
+
+    .title {
+      position: relative;
+      display: flex;
+      text-align: center;
+      justify-content: center;
+      font-size: 8px;
+      background-color: white;
+      border-radius: 0 0 20px 20px;
+    }
+    &:hover {
+      transform: scale(1.05);
+    }
   }
   @media (max-width: 1024px) {
+    height: 100%;
+    width: 100%;
+    .image {
+      height: 300px;
+      animation: transform 1s linear;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+    }
+
+    .title {
+      position: relative;
+      display: flex;
+      text-align: center;
+      justify-content: center;
+      font-size: 8px;
+      border-radius: 0 0 20px 20px;
+    }
+    &:hover {
+      .image {
+        transform: scale(0.95);
+      }
+      .nameDescriptionWrapper {
+        position: absolute;
+        height: 200px;
+        background-color: rgba(255, 255, 255, 0.8);
+        z-index: 2;
+      }
+      .title {
+        position: relative;
+      }
+      .description {
+        display: flex;
+        text-align: left;
+        flex-direction: row;
+      }
+    }
   }
   @media (max-width: 768px) {
-    max-height: 450px;
+    max-height: 200px;
     height: 100%;
-    max-width: 90%;
-    width: 100%;
-  }
+    width: 90%;
+    .image {
+      height: 100%;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+    }
+
+    .title {
+      position: relative;
+      display: flex;
+      text-align: center;
+      justify-content: center;
+      font-size: 8px;
+      border-radius: 0 0 20px 20px;
+    }
+
   @media (max-width: 425px) {
     max-height: 250px;
     height: 100%;
@@ -106,13 +218,20 @@ const Div = styled.div`
     }
 
     .title {
-      position: relative;
+      position: absolute;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
       display: flex;
       text-align: center;
+      -webkit-box-pack: center;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
       justify-content: center;
       font-size: 8px;
-      background-color: white;
       border-radius: 0 0 20px 20px;
+      bottom: 0;
+      width: 100%;
     }
   }
 
