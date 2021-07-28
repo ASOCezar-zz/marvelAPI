@@ -1,19 +1,12 @@
 import styled from 'styled-components';
-import { InputSearch } from '../InputSearch';
 import { MenuIcon } from '../MenuIcon';
-
 import icon from '../../icons/marvel.png';
 
 export const HeaderMenu = () => {
   return (
     <Div>
       <MenuIcon />
-      <div className="iconMarvel">
-        <img src={icon} />
-      </div>
-      <div>
-        <InputSearch />
-      </div>
+      <div className="iconMarvel"></div>
     </Div>
   );
 };
@@ -22,20 +15,20 @@ const Div = styled.div`
   background-color: black;
   position: fixed;
   grid-area: header;
-  height: 40px;
+  height: 70px;
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
   z-index: 2;
-
-  @media (max-width: 450px) {
-    .iconMarvel {
-      img {
-        width: 75px;
-      }
+  .iconMarvel {
+    background: url(${icon});
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: black;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
     }
   }
 `;

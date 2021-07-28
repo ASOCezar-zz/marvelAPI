@@ -19,6 +19,10 @@ function changeMenuIcon() {
 const Container = styled.div`
   display: inline-block;
   cursor: pointer;
+  align-self: left;
+  position: absolute;
+  top: 15px;
+  left: 3%;
   div {
     width: 35px;
     height: 5px;

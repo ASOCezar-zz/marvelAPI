@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 import { CharsContext } from '../../contexts/CharsProvider/context';
 import { ClickedCharContext } from '../../contexts/ClickedCharProvider/context';
@@ -67,6 +67,17 @@ export const Cards = () => {
   );
 };
 
+const showDescription = keyframes`
+  from {
+    margin-top: 0%;
+    height: 0;
+  }
+  to {
+    margin-top: -190px;
+    height: 200px;
+  }
+`;
+
 const Div = styled.div`
   background-color: white;
   background-position: top center;
@@ -79,12 +90,27 @@ const Div = styled.div`
   .nameDescriptionWrapper {
     display: flex;
     flex-direction: column;
-    position: absolute;
+    position: relative;
     width: 100%;
+    border-radius: 0 0 20px 20px;
     background-color: white;
-    animation: height 1s linear;
+
     .description {
-      display: none;
+    display: none;
+    text-align: justify;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    width: 90%;
+    margin: 0 auto;
     }
   }
 
@@ -100,6 +126,7 @@ const Div = styled.div`
     -ms-flex-align: center;
     align-items: center;
     justify-items: center;
+    transition: transform 0.3s linear;
   }
 
   @media (min-width: 1025px) {
@@ -121,11 +148,6 @@ const Div = styled.div`
       text-align: center;
       justify-content: center;
       font-size: 8px;
-      background-color: white;
-      border-radius: 0 0 20px 20px;
-    }
-    &:hover {
-      transform: scale(1.05);
     }
   }
   @media (max-width: 1024px) {
@@ -148,25 +170,24 @@ const Div = styled.div`
       text-align: center;
       justify-content: center;
       font-size: 8px;
-      border-radius: 0 0 20px 20px;
     }
-    &:hover {
-      .image {
-        transform: scale(0.95);
-      }
-      .nameDescriptionWrapper {
-        position: absolute;
-        height: 200px;
-        background-color: rgba(255, 255, 255, 0.8);
-        z-index: 2;
-      }
-      .title {
-        position: relative;
-      }
-      .description {
-        display: flex;
-        text-align: left;
-        flex-direction: row;
+    @media(min-width: 769px) {
+      &:hover {
+        .image {
+          transform: scale(0.95);
+          position: relative;
+        }
+        .nameDescriptionWrapper {
+          animation: ${showDescription} 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+          z-index: 2;
+          background-color: rgba(255, 255, 255, 0.9);
+        }
+        .title {
+          position: relative;
+        }
+        .description {
+          display: flex;
+        }
       }
     }
   }
@@ -183,14 +204,15 @@ const Div = styled.div`
       height: 100%;
       border-radius: 10px;
     }
-
+    ..nameDescriptionWrapper {
+      bottom: 15px;
+    }
     .title {
       position: relative;
       display: flex;
       text-align: center;
       justify-content: center;
       font-size: 8px;
-      border-radius: 0 0 20px 20px;
     }
 
   @media (max-width: 425px) {
@@ -218,7 +240,7 @@ const Div = styled.div`
     }
 
     .title {
-      position: absolute;
+      position: relative;
       display: -webkit-box;
       display: -webkit-flex;
       display: -ms-flexbox;
@@ -229,8 +251,6 @@ const Div = styled.div`
       -ms-flex-pack: center;
       justify-content: center;
       font-size: 8px;
-      border-radius: 0 0 20px 20px;
-      bottom: 0;
       width: 100%;
     }
   }

@@ -76,7 +76,11 @@ export const CardsWrapper = styled.div`
     grid-template-columns: 1fr 1fr;
     grid-auto-rows: 200px;
     justify-items: center;
-    gap: 5px;
+    column-gap: 5px;
+    row-gap: 35px;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
   }
 
