@@ -1,9 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { animated, useSpring } from 'react-spring';
 import { ClickedCharContext } from '../../contexts/ClickedCharProvider/context';
 import { ModalOpenContext } from '../../contexts/ModalOpenProvider/context';
 import { CharsContext } from '../../contexts/CharsProvider/context';
+import miranha from '../../icons/miranha.png';
+import { IsLoadingComicsContext } from '../../contexts/IsLoadingComicsProvider/context';
+import { comicsFetch } from '../../utils/comicsFetch';
 
 export const Modal = () => {
   const clickedCharContext = useContext(ClickedCharContext);
@@ -15,19 +18,15 @@ export const Modal = () => {
   const modalOpenContext = useContext(ModalOpenContext);
   const { isModalOpen, setIsModalOpen } = modalOpenContext;
 
+  const isLoadingComicsContext = useContext(IsLoadingComicsContext);
+  const { isLoadingComics, setIsLoadingComics } = isLoadingComicsContext;
+
   const [comics, setComics] = useState([]);
 
   useEffect(() => {
-    clickedChar.comics?.items.map((item, index) => {
-      const URI = item.resourceURI.replace('http', 'https');
-      if (index <= 11) {
-        fetch(`${URI}?ts=${timestamps}&apikey=${publicKey}&hash=${md5}`)
-          .then((res) => res.json())
-          .then((res) => setComics((prevState) => [...prevState, res.data.results[0].thumbnail]));
-      }
-    });
+    comicsFetch({ timestamps, publicKey, md5, clickedChar, setComics, setIsLoadingComics });
     //eslint-disable-next-line
-  }, [clickedChar]);
+  }, [timestamps, publicKey, md5, clickedChar]);
 
   const contentProps = useSpring({
     opacity: isModalOpen ? 1 : 0,
@@ -40,6 +39,11 @@ export const Modal = () => {
     to: { transform: `scale(${isModalOpen ? '1' : '0'}) rotate(${isModalOpen ? '1440deg' : '0deg'})` },
   });
 
+  const loading = useSpring({
+    from: { transform: 'rotate(0deg)' },
+    to: { transform: `rotateX(${isLoadingComics ? '0deg' : '360deg'}) infinite` },
+  });
+
   return (
     <Container isModalOpen={isModalOpen}>
       <animated.div
@@ -49,6 +53,7 @@ export const Modal = () => {
           setIsModalOpen(false);
           setClickedChar([]);
           setComics([]);
+          setIsLoadingComics(false);
         }}
       >
         <animated.div style={rotation} className="content" isModalOpen={isModalOpen}>
@@ -57,18 +62,41 @@ export const Modal = () => {
           </ImageDiv>
           <H3> {clickedChar.name} </H3>
           <h4> Comics </h4>
-          <Comics>
-            {comics.map((comic, index) => {
-              if (index <= 8) {
-                return <img src={comic.path + '.' + comic.extension} />;
-              }
-            })}
-          </Comics>
+          {isLoadingComics ? (
+            <animated.div style={loading} className="miranha" isLoadingComics={isLoadingComics} />
+          ) : (
+            <Comics isLoadingComics={isLoadingComics}>
+              {comics.map((comic, index) => {
+                if (index <= 8) {
+                  return <img key={comic.name} src={comic.path + '.' + comic.extension} />;
+                }
+              })}
+            </Comics>
+          )}
         </animated.div>
       </animated.div>
     </Container>
   );
 };
+
+const pulsing = keyframes`
+  0% {
+		transform: scale(0.95);
+		box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.8);
+	}
+
+	70% {
+		transform: scale(1);
+		box-shadow: 0 0 0 50px rgba(255, 0, 0, 0);
+	}
+
+	100% {
+    -webkit-transform: scale(0.95);
+    -ms-transform: scale(0.95);
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgb(255 0 0 / 0%);
+	}
+`;
 
 const Container = styled.div`
   position: fixed;
@@ -78,8 +106,19 @@ const Container = styled.div`
   z-index: 1;
   justify-content: center;
 
+  .miranha {
+    display: flex;
+    background-image: url(${miranha});
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 190px;
+    height: 190px;
+    border-radius: 100%;
+    margin-top: 30px;
+    animation: ${pulsing} 1s infinite;
+  }
+
   .background {
-    height: 100%;
     width: 100%;
     background: rgba(0, 0, 0, 0.5);
     display: flex;
@@ -88,22 +127,20 @@ const Container = styled.div`
     justify-content: center;
   }
   h4 {
-    color: white;
+    color: black;
     font-size: 22px;
     @media (max-width: 767px){
       margin: 0;
     }
     @media (min-width: 1025px){
       margin-top: 0;
-    color: white;
+    color: black;
     font-size: 30px;
     }
   }
 
   .content {
-    background-image: linear-gradient(
-180deg
-,#980000,#ed1a23, #000);
+    background-color: #e8e8e8;
   height: 700px;
   width: 350px;
   border-radius: 8px;
@@ -142,7 +179,7 @@ const Container = styled.div`
 
 const H3 = styled('h3')`
   margin-top: 105px;
-  color: white;
+  color: black;
   font-size: 26px;
   @media (min-width: 1025px) {
     margin-top: 146px;

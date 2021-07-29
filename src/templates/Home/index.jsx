@@ -4,6 +4,7 @@ import { Modal } from '../../components/Modal';
 import { CharsProvider } from '../../contexts/CharsProvider/index';
 import { ClickedCharProvider } from '../../contexts/ClickedCharProvider/index';
 import { ModalOpenProvider } from '../../contexts/ModalOpenProvider/index';
+import { IsLoadingComicsProvider } from '../../contexts/IsLoadingComicsProvider';
 
 const Home = () => {
   return (
@@ -11,8 +12,10 @@ const Home = () => {
       <CharsProvider>
         <ClickedCharProvider>
           <HeaderMenu />
-          <Modal />
-          <Cards />
+          <IsLoadingComicsProvider>
+            <Modal />
+            <Cards />
+          </IsLoadingComicsProvider>
         </ClickedCharProvider>
       </CharsProvider>
     </ModalOpenProvider>

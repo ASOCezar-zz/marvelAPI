@@ -204,7 +204,7 @@ const Div = styled.div`
       height: 100%;
       border-radius: 10px;
     }
-    ..nameDescriptionWrapper {
+    .nameDescriptionWrapper {
       bottom: 15px;
     }
     .title {
