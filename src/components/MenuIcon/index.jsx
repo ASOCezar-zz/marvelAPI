@@ -1,8 +1,14 @@
 import styled from 'styled-components';
+import P from 'prop-types';
 
-export const MenuIcon = () => {
+export const MenuIcon = ({ setIsMenuOpen }) => {
   return (
-    <Container onClick={changeMenuIcon}>
+    <Container
+      onClick={() => {
+        changeMenuIcon();
+        setIsMenuOpen((prevState) => !prevState);
+      }}
+    >
       <div className="bar1"></div>
       <div className="bar2"></div>
       <div className="bar3"></div>
@@ -45,3 +51,7 @@ const Container = styled.div`
     transform: rotate(45deg) translate(-8px, -8px);
   }
 `;
+
+MenuIcon.propTypes = {
+  setIsMenuOpen: P.func.isRequired,
+};

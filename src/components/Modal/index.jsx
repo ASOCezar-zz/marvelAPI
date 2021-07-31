@@ -5,8 +5,9 @@ import { ClickedCharContext } from '../../contexts/ClickedCharProvider/context';
 import { ModalOpenContext } from '../../contexts/ModalOpenProvider/context';
 import { CharsContext } from '../../contexts/CharsProvider/context';
 import miranha from '../../icons/miranha.png';
-import { IsLoadingComicsContext } from '../../contexts/IsLoadingComicsProvider/context';
 import { comicsFetch } from '../../utils/comicsFetch';
+// import { favoriteChar } from '../../utils/favoriteChar';
+import { FavoriteStar } from '../../icons/favoriteIcon';
 
 export const Modal = () => {
   const clickedCharContext = useContext(ClickedCharContext);
@@ -18,8 +19,7 @@ export const Modal = () => {
   const modalOpenContext = useContext(ModalOpenContext);
   const { isModalOpen, setIsModalOpen } = modalOpenContext;
 
-  const isLoadingComicsContext = useContext(IsLoadingComicsContext);
-  const { isLoadingComics, setIsLoadingComics } = isLoadingComicsContext;
+  const [isLoadingComics, setIsLoadingComics] = useState(false);
 
   const [comics, setComics] = useState([]);
 
@@ -53,27 +53,28 @@ export const Modal = () => {
           setIsModalOpen(false);
           setClickedChar([]);
           setComics([]);
-          setIsLoadingComics(false);
         }}
-      >
-        <animated.div style={rotation} className="content" isModalOpen={isModalOpen}>
-          <ImageDiv>
-            <img src={clickedChar.thumbnail?.path + '.' + clickedChar.thumbnail?.extension} />
-          </ImageDiv>
+      ></animated.div>
+      <animated.div style={rotation} className="content" isModalOpen={isModalOpen}>
+        <ImageDiv>
+          <img src={clickedChar.thumbnail?.path + '.' + clickedChar.thumbnail?.extension} />
+        </ImageDiv>
+        <span className="favNameWrapper">
           <H3> {clickedChar.name} </H3>
-          <h4> Comics </h4>
-          {isLoadingComics ? (
-            <animated.div style={loading} className="miranha" isLoadingComics={isLoadingComics} />
-          ) : (
-            <Comics isLoadingComics={isLoadingComics}>
-              {comics.map((comic, index) => {
-                if (index <= 8) {
-                  return <img key={comic.name} src={comic.path + '.' + comic.extension} />;
-                }
-              })}
-            </Comics>
-          )}
-        </animated.div>
+          <FavoriteStar onClick={() => localStorage.setItem('favorites', clickedChar)} />
+        </span>
+        <h4> Comics </h4>
+        {isLoadingComics ? (
+          <animated.div style={loading} className="miranha" />
+        ) : (
+          <Comics>
+            {comics.map((comic, index) => {
+              if (index <= 8) {
+                return <img key={comic.id} src={comic.path + '.' + comic.extension} />;
+              }
+            })}
+          </Comics>
+        )}
       </animated.div>
     </Container>
   );
@@ -106,6 +107,17 @@ const Container = styled.div`
   z-index: 1;
   justify-content: center;
 
+  .favNameWrapper {
+    @media(max-width: 767px){
+      width: 90%;
+      margin-top: 105px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around;
+    }
+  }
+
   .miranha {
     display: flex;
     background-image: url(${miranha});
@@ -122,6 +134,8 @@ const Container = styled.div`
     width: 100%;
     background: rgba(0, 0, 0, 0.5);
     display: flex;
+
+    cursor: pointer;
 
     align-items: center;
     justify-content: center;
@@ -141,48 +155,49 @@ const Container = styled.div`
 
   .content {
     background-color: #e8e8e8;
-  height: 700px;
-  width: 350px;
-  border-radius: 8px;
+    height: 700px;
+    width: 350px;
+    border-radius: 8px;
 
   @media (min-width: 1025px){
     height: 750px;
     width: 70%;
-    margin-bottom: -5px;
     position: absolute;
+    inset-block: 200px;
   }
 
   @media(max-width: 767px){
     height: 550px;
-    width: 250px;
+    width: 80%;
     align-self: center;
-    margin-bottom: 200px;
     position: absolute;
+    inset-block: 200px;
   }
 
   @media(max-width:1024px){
     height: 650px;
     width: 80%;
-    margin-bottom: 110px;
+    inset-block: 200px;
     position: absolute;
+    margin: 0 auto;
   }
 
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  cursor: pointer;
-
   padding: 12px;
   }
 `;
 
 const H3 = styled('h3')`
-  margin-top: 105px;
   color: black;
   font-size: 26px;
-  @media (min-width: 1025px) {
-    margin-top: 146px;
+  @media (min-width: 768px) {
+    margin-top: 100px;
+  }
+  @media (min-width: 1024px) {
+    margin-top: 140px;
   }
 `;
 
@@ -226,9 +241,10 @@ const Comics = styled.div`
   grid-template-rows: repeat(2, 100px);
 
   @media (min-width: 1025px) {
-    grid-template-columns: repeat(6, 148px);
-    grid-template-rows: repeat(2, 185px);
-    gap: 65px;
+    grid-template-columns: repeat(6, auto);
+    grid-template-rows: repeat(2, 200px);
+    column-gap: 10px;
+    row-gap: 60px;
 
     img {
       width: 100%;

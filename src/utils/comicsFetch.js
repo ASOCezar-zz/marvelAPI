@@ -12,7 +12,6 @@ export const comicsFetch = ({ timestamps, setIsLoadingComics, publicKey, md5, cl
         .then(() => {
           if (index + 1 === numberComics || index === 11) {
             setIsLoadingComics(false);
-            console.log('passei aqui', numberComics, index + 1);
           }
         });
     }
@@ -29,4 +28,5 @@ comicsFetch.propTypes = {
   md5: P.string.isRequired,
   clickedChar: P.array,
   setComics: P.func.isRequired,
+  setIsLoadingComics: P.func.isRequired,
 };
