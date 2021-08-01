@@ -6,8 +6,8 @@ import { ModalOpenContext } from '../../contexts/ModalOpenProvider/context';
 import { CharsContext } from '../../contexts/CharsProvider/context';
 import miranha from '../../icons/miranha.png';
 import { comicsFetch } from '../../utils/comicsFetch';
-// import { favoriteChar } from '../../utils/favoriteChar';
 import { FavoriteStar } from '../../icons/favoriteIcon';
+import { FavoritesContext } from '../../contexts/FavoritesContext/context';
 
 export const Modal = () => {
   const clickedCharContext = useContext(ClickedCharContext);
@@ -19,14 +19,19 @@ export const Modal = () => {
   const modalOpenContext = useContext(ModalOpenContext);
   const { isModalOpen, setIsModalOpen } = modalOpenContext;
 
+  const favoritesContext = useContext(FavoritesContext);
+  const { favorites, favPressed, setFavPressed } = favoritesContext;
+
   const [isLoadingComics, setIsLoadingComics] = useState(false);
 
   const [comics, setComics] = useState([]);
 
   useEffect(() => {
     comicsFetch({ timestamps, publicKey, md5, clickedChar, setComics, setIsLoadingComics });
-    //eslint-disable-next-line
-  }, [timestamps, publicKey, md5, clickedChar]);
+    const isFavoriteChar = favorites.find((item) => item.id === clickedChar.id);
+    isFavoriteChar ? setFavPressed(true) : setFavPressed(false);
+    // eslint-disable-next-line
+  }, [clickedChar, favorites]);
 
   const contentProps = useSpring({
     opacity: isModalOpen ? 1 : 0,
@@ -44,6 +49,17 @@ export const Modal = () => {
     to: { transform: `rotateX(${isLoadingComics ? '0deg' : '360deg'}) infinite` },
   });
 
+  const handleClickFav = () => {
+    setFavPressed((prevState) => !prevState);
+  };
+
+  useEffect(() => {
+    favPressed
+      ? window.localStorage.setItem(`${clickedChar.id}`, JSON.stringify(clickedChar))
+      : window.localStorage.removeItem(`${clickedChar.id}`);
+    // eslint-disable-next-line
+  }, [favPressed]);
+
   return (
     <Container isModalOpen={isModalOpen}>
       <animated.div
@@ -55,13 +71,13 @@ export const Modal = () => {
           setComics([]);
         }}
       ></animated.div>
-      <animated.div style={rotation} className="content" isModalOpen={isModalOpen}>
+      <animated.div style={rotation} className="content">
         <ImageDiv>
-          <img src={clickedChar.thumbnail?.path + '.' + clickedChar.thumbnail?.extension} />
+          <img key={clickedChar.id} src={clickedChar.thumbnail?.path + '.' + clickedChar.thumbnail?.extension} />
         </ImageDiv>
         <span className="favNameWrapper">
           <H3> {clickedChar.name} </H3>
-          <FavoriteStar onClick={() => localStorage.setItem('favorites', clickedChar)} />
+          <FavoriteStar onClick={() => handleClickFav(clickedChar)} favPressed={favPressed} />
         </span>
         <h4> Comics </h4>
         {isLoadingComics ? (
@@ -70,7 +86,7 @@ export const Modal = () => {
           <Comics>
             {comics.map((comic, index) => {
               if (index <= 8) {
-                return <img key={comic.id} src={comic.path + '.' + comic.extension} />;
+                return <img key={index} src={comic.path + '.' + comic.extension} />;
               }
             })}
           </Comics>
