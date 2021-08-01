@@ -1,41 +1,21 @@
-import styled from 'styled-components';
 import { MenuIcon } from '../MenuIcon';
-import icon from '../../icons/marvel.png';
 import { useState } from 'react';
 import { MenuWrapper } from '../MenuWrapper';
+import { InputSearch } from '../InputSearch';
+import { Div } from './style';
 
 export const HeaderMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isInputOnFocus, setIsInputOnFocus] = useState(false);
 
   return (
     <>
-      <Div>
+      <Div isInputOnFocus={isInputOnFocus}>
         <MenuIcon setIsMenuOpen={setIsMenuOpen} />
-        <div className="iconMarvel"></div>
+        <div className="iconMarvel" isInputOnFocus={isInputOnFocus}></div>
+        <InputSearch onFocus={() => setIsInputOnFocus(true)} onBlur={() => setIsInputOnFocus(false)} />
       </Div>
       <MenuWrapper isMenuOpen={isMenuOpen} />
     </>
   );
 };
-
-const Div = styled.div`
-  background-color: black;
-  position: fixed;
-  grid-area: header;
-  height: 70px;
-  width: 100vw;
-  display: flex;
-  flex-direction: row;
-  z-index: 2;
-  .iconMarvel {
-    background: url(${icon});
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-color: black;
-    background-position: center;
-    width: 100%;
-    height: 100%;
-    margin: 0 auto;
-    }
-  }
-`;

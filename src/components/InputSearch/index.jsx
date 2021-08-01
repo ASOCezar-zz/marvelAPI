@@ -1,75 +1,30 @@
-import styled from 'styled-components';
+import P from 'prop-types';
+import { Input } from './style';
 import image from '../../icons/Vector_search_icon.svg';
+import { useRef } from 'react';
 
-export const InputSearch = () => {
+export const InputSearch = ({ onFocus, onBlur }) => {
+  const inputValue = useRef();
+
+  const handleClick = () => {
+    const searchValue = inputValue.current.value;
+    fetch(
+      `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${searchValue}&ts=1627160343&apikey=bcc7616374e3d240e7270653f1b2b599&hash=8238c0c73920dc83cfe09aec0b169d26`,
+    ).then((res) => res.json());
+  };
   return (
     <Input>
-      <input type="text" placeholder="Search..." />
-      <div className="image">
+      <input onFocus={onFocus} onBlur={onBlur} ref={inputValue} type="text" placeholder="Search..." />
+      <div className="image" onClick={handleClick}>
         <img src={image} />
       </div>
     </Input>
   );
 };
 
-const Input = styled.div`
-  background-color: #980000;
-  border-radius: 25px;
-  padding: 0;
-  margin-right: 50px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+InputSearch.propTypes = {
+  onFocus: P.func.isRequired,
+  onBlur: P.func.isRequired,
+};
 
-  @media (max-width: 450px) {
-    margin: 20px;
-  }
-
-  .image {
-    padding: 10px;
-    border-radius: 100%;
-    border: 2px solid white;
-  }
-
-  input {
-    border: none;
-    background-color: #980000;
-    color: white;
-    background-position: 10px 10px;
-    background-image: ${image};
-    background-repeat: no-repeat;
-    border-radius: 5px;
-    outline: none;
-
-    height: 45px;
-    width: 100px;
-    @media (max-width: 450px) {
-      width: 50px;
-    }
-    box-sizing: border-box;
-
-    transition: width 0.4s ease-in-out;
-
-    &:focus {
-      border: none;
-      width: 260px;
-    }
-
-    @media (max-width: 450px) {
-      &:focus {
-        border: none;
-        width: 100px;
-      }
-    }
-
-    ::placeholder,
-    ::-webkit-input-placeholder {
-      color: white;
-      font-weight: bold;
-    }
-    :-ms-input-placeholder {
-      color: white;
-      font-weight: bold;
-    }
-  }
-`;
+// TODO: Fazer o resto da requisição
