@@ -1,0 +1,30 @@
+import styled from 'styled-components';
+
+export const SearchedCharsWrapper = styled.div`
+  background-color: #808080;
+  width: 95vw;
+  display: grid;
+  grid-auto-rows: 325px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 70px;
+  margin: 0 auto;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: absolute;
+  top: 70px;
+  justify-items: initial;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  padding: 15px;
+`;

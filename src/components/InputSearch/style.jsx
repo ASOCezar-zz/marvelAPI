@@ -11,7 +11,7 @@ export const Input = styled.div`
   position: absolute;
   @media (min-width: 451px) {
     inset-block-end: 10px;
-    inset-inline-end: 0px;
+    inset-inline-end: 30px;
   }
 
   @media (max-width: 450px) {
