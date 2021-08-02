@@ -60,7 +60,17 @@ export const InputSearch = ({ onFocus, onBlur }) => {
       </Input>
       <SearchedCharsWrapper isSearching={isSearching}>
         <div>
-          <h2> Clique no personagem que deseja salvar como favorito!! </h2>
+          {searchedChars.length === 0 ? (
+            <>
+              <h2> Não foram encontrados resultados para {inputValue.current.value} </h2>
+              <p> Obs.: Verifique se o nome do personagem foi digitado corretamente (este deve estar em Inglês) </p>
+            </>
+          ) : (
+            <>
+              <h1> Resultados para {inputValue.current.value} </h1>
+              <h2> Clique no personagem que deseja salvar como favorito!! </h2>
+            </>
+          )}
         </div>
         {searchedChars?.map((char) => {
           return <Card key={char.id} char={char} onClick={() => handleConfirm({ char })} />;

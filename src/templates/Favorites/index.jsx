@@ -18,7 +18,7 @@ export const Favorites = () => {
     <>
       <HeaderMenu
         childrenOne={<Option name={'Home'} goto={'/'} image={homeImage} />}
-        childrenTwo={<Option name={'Dev Contact'} goto={''} image={contactImage} />}
+        childrenTwo={<Option name={'Dev Contact'} goto={'https://github.com/asocezar'} image={contactImage} />}
       />
       <Modal />
       <Cards array={favorites} setLimit={setLimit} />
