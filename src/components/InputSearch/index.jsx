@@ -21,33 +21,44 @@ export const InputSearch = ({ onFocus, onBlur }) => {
       .then((res) => setSearchedChars(res.data?.results));
   };
 
+  const handleConfirm = ({ char }) => {
+    //eslint-disable-next-line
+    const result = window.confirm(`Gostaria de Favoritar ${char?.name}?`);
+    if (result) {
+      const isSaved = window.localStorage.getItem(`${char.id}`);
+      isSaved
+        ? window.alert(`${char.name} já está salvo em seus favoritos`)
+        : window.localStorage.setItem(`${char.id}`, JSON.stringify(char));
+    }
+  };
+  console.log(isSearching);
+
   return (
     <>
       <Input>
-        <div className="image" onClick={() => handleClick()}>
-          <img
-            src={cancelIcon}
-            style={{ maxWidth: '20px', cursor: 'pointer' }}
-            onClick={() => {
-              inputValue.current.value = '';
-              setSearchedChars([]);
-              setIsSearching(false);
-            }}
-          />
+        <div
+          className="image"
+          onClick={() => {
+            inputValue.current.value = '';
+            setSearchedChars([]);
+            setIsSearching(false);
+          }}
+        >
+          <img src={cancelIcon} style={{ maxWidth: '20px', cursor: 'pointer' }} />
         </div>
         <input onFocus={onFocus} onBlur={onBlur} ref={inputValue} type="text" placeholder="Search..." />
         <div className="image" onClick={() => handleClick()}>
           <img src={image} style={{ cursor: 'pointer' }} />
         </div>
       </Input>
-      {isSearching && (
-        <SearchedCharsWrapper>
-          {searchedChars?.map((char) => {
-            console.log(char);
-            return <Card key={char.id} char={char} />;
-          })}
-        </SearchedCharsWrapper>
-      )}
+      <SearchedCharsWrapper isSearching={isSearching}>
+        <div>
+          <h2> Clique no personagem que deseja salvar como favorito!! </h2>
+        </div>
+        {searchedChars?.map((char) => {
+          return <Card key={char.id} char={char} onClick={() => handleConfirm({ char })} />;
+        })}
+      </SearchedCharsWrapper>
     </>
   );
 };

@@ -11,7 +11,7 @@ export const Input = styled.div`
   position: absolute;
   @media (min-width: 451px) {
     inset-block-end: 10px;
-    inset-inline-end: 30px;
+    inset-inline-end: 0px;
   }
 
   @media (max-width: 450px) {
@@ -52,7 +52,7 @@ export const Input = styled.div`
     }
     &:focus {
       border: none;
-      width: 240px;
+      width: 210px;
     }
 
     @media (max-width: 450px) {
