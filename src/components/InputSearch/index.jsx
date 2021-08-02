@@ -62,12 +62,12 @@ export const InputSearch = ({ onFocus, onBlur }) => {
         <div>
           {searchedChars.length === 0 ? (
             <>
-              <h2> Não foram encontrados resultados para {inputValue.current.value} </h2>
+              <h2> Não foram encontrados resultados para {inputValue.current?.value} </h2>
               <p> Obs.: Verifique se o nome do personagem foi digitado corretamente (este deve estar em Inglês) </p>
             </>
           ) : (
             <>
-              <h1> Resultados para {inputValue.current.value} </h1>
+              <h1> Resultados para {inputValue.current?.value} </h1>
               <h2> Clique no personagem que deseja salvar como favorito!! </h2>
             </>
           )}
