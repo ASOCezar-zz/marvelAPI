@@ -2,7 +2,6 @@ import P from 'prop-types';
 import { DescriptionDiv, ImageDiv, NameDiv, Wrapper } from './style';
 
 export const SearchedCard = ({ char }) => {
-  console.log(char);
   return (
     <Wrapper>
       <ImageDiv>

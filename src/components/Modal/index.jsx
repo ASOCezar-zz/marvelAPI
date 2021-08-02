@@ -85,7 +85,7 @@ export const Modal = () => {
         ) : (
           <Comics>
             {comics.map((comic, index) => {
-              if (index <= 8) {
+              if (index <= 15) {
                 return <img key={index} src={comic.path + '.' + comic.extension} />;
               }
             })}
@@ -257,7 +257,7 @@ const Comics = styled.div`
   grid-template-rows: repeat(2, 100px);
 
   @media (min-width: 1025px) {
-    grid-template-columns: repeat(6, auto);
+    grid-template-columns: repeat(8, auto);
     grid-template-rows: repeat(2, 200px);
     column-gap: 10px;
     row-gap: 60px;

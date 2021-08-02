@@ -1,24 +1,29 @@
+import { useContext } from 'react';
+
 import { Cards } from '../../components/Cards';
 import { HeaderMenu } from '../../components/HeaderMenu';
 import { Modal } from '../../components/Modal';
-import { CharsProvider } from '../../contexts/CharsProvider/index';
-import { ClickedCharProvider } from '../../contexts/ClickedCharProvider/index';
 import { FavoritesProvider } from '../../contexts/FavoritesContext';
-import { ModalOpenProvider } from '../../contexts/ModalOpenProvider/index';
+import { CharsContext } from '../../contexts/CharsProvider/context';
+import { LoadMoreChars } from '../../components/LoadMoreChars';
+import contactImage from '../../icons/contact.svg';
+import favoriteImage from '../../icons/favorites.svg';
+import { Option } from '../../components/Option';
 
 const Home = () => {
+  const charsContext = useContext(CharsContext);
+  const { characters } = charsContext;
+
   return (
-    <ModalOpenProvider>
-      <CharsProvider>
-        <FavoritesProvider>
-          <ClickedCharProvider>
-            <HeaderMenu />
-            <Modal />
-            <Cards />
-          </ClickedCharProvider>
-        </FavoritesProvider>
-      </CharsProvider>
-    </ModalOpenProvider>
+    <FavoritesProvider>
+      <HeaderMenu
+        childrenOne={<Option name={'Favorites'} goto={'/favorites'} image={favoriteImage} />}
+        childrenTwo={<Option name={'Dev Contact'} goto={'https://github.com/asocezar'} image={contactImage} />}
+      />
+      <Modal />
+      <Cards array={characters} />
+      <LoadMoreChars />
+    </FavoritesProvider>
   );
 };
 

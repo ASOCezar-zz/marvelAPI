@@ -5,7 +5,7 @@ export const Card = ({ char, onClick }) => {
   return (
     <Div key={char.id} onClick={onClick}>
       <div className="image">
-        <img src={char.thumbnail.path + '.' + char.thumbnail.extension} />
+        <img src={char.thumbnail?.path + '.' + char.thumbnail?.extension} />
       </div>
       <div className="nameDescriptionWrapper">
         <div className="title">

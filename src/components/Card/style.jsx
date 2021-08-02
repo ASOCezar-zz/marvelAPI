@@ -82,6 +82,24 @@ border-radius: 15px;
     justify-content: center;
     font-size: 8px;
   }
+
+  &:hover {
+      .image {
+        transform: scale(0.95);
+        position: relative;
+      }
+      .nameDescriptionWrapper {
+        animation: ${showDescription} 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        z-index: 2;
+        background-color: rgba(255, 255, 255, 0.9);
+      }
+      .title {
+        position: relative;
+      }
+      .description {
+        display: flex;
+      }
+    }
 }
 @media (max-width: 1024px) {
   height: 100%;
