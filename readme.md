@@ -1,4 +1,10 @@
 # Marvel Library
+<p>
+<img src= 'public/icons/logo-react.svg' width = '100px' height = '100px' />
+<img src= 'public/icons/logo-react.svg' width = '100px' height = '100px' />
+<img src= 'public/icons/logo-react.svg' width = '100px' height = '100px' />
+</p>
+
 
 ![Marvel Library](public/images/InstantGif_2021.08.02-22.15.gif)
 ------------
