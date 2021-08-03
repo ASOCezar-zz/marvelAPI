@@ -17,13 +17,14 @@ export const InputSearch = ({ onFocus, onBlur }) => {
 
   const handleClick = () => {
     const searchValue = inputValue.current.value;
-    setIsSearching(true);
-    fetch(
-      `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${searchValue}&ts=1627160343&apikey=bcc7616374e3d240e7270653f1b2b599&hash=8238c0c73920dc83cfe09aec0b169d26`,
-    )
-      .then((res) => res.json())
-      .then((res) => setSearchedChars(res.data?.results))
-      .catch((err) => window.alert(err.message));
+    searchValue.length > 0 &&
+      setIsSearching(true) &&
+      fetch(
+        `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${searchValue}&ts=1627160343&apikey=bcc7616374e3d240e7270653f1b2b599&hash=8238c0c73920dc83cfe09aec0b169d26`,
+      )
+        .then((res) => res.json())
+        .then((res) => setSearchedChars(res.data?.results))
+        .catch((err) => window.alert(err.message));
   };
 
   const handleConfirm = ({ char }) => {
@@ -53,7 +54,14 @@ export const InputSearch = ({ onFocus, onBlur }) => {
         >
           <img src={cancelIcon} style={{ maxWidth: '20px', cursor: 'pointer' }} />
         </div>
-        <input onFocus={onFocus} onBlur={onBlur} ref={inputValue} type="text" placeholder="Search..." />
+        <input
+          onKeyDown={({ key }) => key === 'Enter' && handleClick()}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          ref={inputValue}
+          type="text"
+          placeholder="Search..."
+        />
         <div className="image" onClick={() => handleClick()}>
           <img src={image} style={{ cursor: 'pointer' }} />
         </div>

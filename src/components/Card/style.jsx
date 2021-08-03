@@ -25,6 +25,8 @@ border-radius: 15px;
   flex-direction: column;
   position: relative;
   width: 100%;
+  font-size: 0px;
+  transition: font-size 0.2s ease;
   border-radius: 0 0 20px 20px;
   background-color: white;
 
@@ -92,6 +94,7 @@ border-radius: 15px;
         animation: ${showDescription} 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
         z-index: 2;
         background-color: rgba(255, 255, 255, 0.9);
+        font-size: 16px;
       }
       .title {
         position: relative;
@@ -132,6 +135,7 @@ border-radius: 15px;
         animation: ${showDescription} 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
         z-index: 2;
         background-color: rgba(255, 255, 255, 0.9);
+        font-size: 16px;
       }
       .title {
         position: relative;
