@@ -1,6 +1,6 @@
 # Marvel Library
 
-![Marvel Library](public\images\InstantGif_2021.08.02-22.15.gif)
+![Marvel Library](public/images/InstantGif_2021.08.02-22.15.gif)
 ------------
 ## Projeto
 O projeto foi pensado para treinar meus aprendizados na linguagem JavaScript e promover uma experiência fluida e dinâmica de acesso ao universo Marvel&reg; do qual sou um dos admiradores.
