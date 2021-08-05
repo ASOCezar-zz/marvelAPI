@@ -16,12 +16,8 @@ ReactDOM.render(
         <ModalOpenProvider>
           <CharsProvider>
             <Switch>
-              <Route path="/favorites">
-                <Favorites />
-              </Route>
-              <Route path="/">
-                <Home />
-              </Route>
+              <Route path="/favorites" component={Favorites} />
+              <Route path="/" component={Home} exact />
             </Switch>
           </CharsProvider>
         </ModalOpenProvider>
