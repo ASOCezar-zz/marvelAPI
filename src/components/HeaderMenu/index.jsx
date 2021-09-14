@@ -1,8 +1,8 @@
 import { MenuIcon } from '../MenuIcon';
 import { useState } from 'react';
-import { MenuWrapper } from '../MenuWrapper';
 import { InputSearch } from '../InputSearch';
-import { Div } from './style';
+import * as Styled from './styles';
+
 import P from 'prop-types';
 
 export const HeaderMenu = ({ childrenOne, childrenTwo }) => {
@@ -11,15 +11,15 @@ export const HeaderMenu = ({ childrenOne, childrenTwo }) => {
 
   return (
     <>
-      <Div isInputOnFocus={isInputOnFocus}>
+      <Styled.Div isInputOnFocus={isInputOnFocus}>
         <MenuIcon setIsMenuOpen={setIsMenuOpen} />
         <div className="iconMarvel" isInputOnFocus={isInputOnFocus}></div>
         <InputSearch onFocus={() => setIsInputOnFocus(true)} onBlur={() => setIsInputOnFocus(false)} />
-      </Div>
-      <MenuWrapper isMenuOpen={isMenuOpen}>
+      </Styled.Div>
+      <Styled.MenuWrapper isMenuOpen={isMenuOpen}>
         {childrenOne}
         {childrenTwo}
-      </MenuWrapper>
+      </Styled.MenuWrapper>
     </>
   );
 };

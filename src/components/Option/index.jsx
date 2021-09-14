@@ -1,4 +1,4 @@
-import { Div } from './style';
+import { Div } from './styles';
 import P from 'prop-types';
 
 export const Option = ({ name, image, goto }) => {

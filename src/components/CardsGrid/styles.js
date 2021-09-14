@@ -20,7 +20,7 @@ const scaleForward = keyframes`
   }
 `;
 
-export const CardsWrapper = styled.div`
+export const Container = styled.div`
   background-image: linear-gradient(180deg, #980000, black);
 
   height: 100%;

@@ -2,7 +2,7 @@ import { HeaderMenu } from '../../components/HeaderMenu';
 import React, { useContext, useState } from 'react';
 import { FavoritesContext } from '../../contexts/FavoritesContext/context';
 import { Modal } from '../../components/Modal';
-import { Cards } from '../../components/Cards';
+import { CardsGrid } from '../../components/CardsGrid';
 import { Option } from '../../components/Option';
 import homeImage from '../../icons/home.svg';
 import contactImage from '../../icons/contact.svg';
@@ -21,7 +21,7 @@ export const Favorites = () => {
         childrenTwo={<Option name={'Dev Contact'} goto={'https://github.com/asocezar'} image={contactImage} />}
       />
       <Modal />
-      <Cards array={favorites} setLimit={setLimit} />
+      <CardsGrid array={favorites} setLimit={setLimit} />
     </>
   );
 };

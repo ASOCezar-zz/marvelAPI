@@ -1,7 +1,7 @@
 import loadingIcon from '../../icons/loading.png';
 import { CharsContext } from '../../contexts/CharsProvider/context';
 import { useContext, useEffect, useRef } from 'react';
-import { Div } from './style';
+import { Div } from './styles';
 
 export const LoadMoreChars = () => {
   const charsContext = useContext(CharsContext);

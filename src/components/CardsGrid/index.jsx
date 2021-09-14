@@ -3,10 +3,12 @@ import P from 'prop-types';
 
 import { ClickedCharContext } from '../../contexts/ClickedCharProvider/context';
 import { ModalOpenContext } from '../../contexts/ModalOpenProvider/context';
-import { CardsWrapper } from '../CardsWrapper/index';
+
+import * as Styled from './styles';
+
 import { Card } from '../Card';
 
-export const Cards = ({ array }) => {
+export const CardsGrid = ({ array }) => {
   const clickedCharContext = useContext(ClickedCharContext);
   const { setClickedChar } = clickedCharContext;
 
@@ -14,7 +16,7 @@ export const Cards = ({ array }) => {
   const { isModalOpen, setIsModalOpen } = modalContext;
 
   return (
-    <CardsWrapper isModalOpen={isModalOpen}>
+    <Styled.Container isModalOpen={isModalOpen}>
       {array?.map((char) => {
         return (
           <Card
@@ -27,11 +29,11 @@ export const Cards = ({ array }) => {
           />
         );
       })}
-    </CardsWrapper>
+    </Styled.Container>
   );
 };
 
-Cards.propTypes = {
+CardsGrid.propTypes = {
   array: P.array.isRequired,
   setLimit: P.func,
 };

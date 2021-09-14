@@ -1,11 +1,11 @@
 import P from 'prop-types';
-import { Input } from './style';
 import image from '../../icons/Vector_search_icon.svg';
 import cancelIcon from '../../icons/clearIcon.png';
 import { useContext, useRef, useState } from 'react';
-import { SearchedCharsWrapper } from '../SearchedCharsWrapper';
 import { Card } from '../Card';
 import { FavoritesContext } from '../../contexts/FavoritesContext/context';
+
+import * as Styled from './styles';
 
 export const InputSearch = ({ onFocus, onBlur }) => {
   const inputValue = useRef();
@@ -43,7 +43,7 @@ export const InputSearch = ({ onFocus, onBlur }) => {
 
   return (
     <>
-      <Input>
+      <Styled.Input>
         <div
           className="image"
           onClick={() => {
@@ -65,8 +65,8 @@ export const InputSearch = ({ onFocus, onBlur }) => {
         <div className="image" onClick={() => handleClick()}>
           <img src={image} style={{ cursor: 'pointer' }} />
         </div>
-      </Input>
-      <SearchedCharsWrapper isSearching={isSearching}>
+      </Styled.Input>
+      <Styled.Wrapper isSearching={isSearching}>
         <div>
           {searchedChars.length === 0 ? (
             <>
@@ -83,7 +83,7 @@ export const InputSearch = ({ onFocus, onBlur }) => {
         {searchedChars?.map((char) => {
           return <Card key={char.id} char={char} onClick={() => handleConfirm({ char })} />;
         })}
-      </SearchedCharsWrapper>
+      </Styled.Wrapper>
     </>
   );
 };

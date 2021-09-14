@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { Cards } from '../../components/Cards';
+import { CardsGrid } from '../../components/CardsGrid';
 import { HeaderMenu } from '../../components/HeaderMenu';
 import { Modal } from '../../components/Modal';
 import { FavoritesProvider } from '../../contexts/FavoritesContext';
@@ -21,7 +21,7 @@ const Home = () => {
         childrenTwo={<Option name={'Dev Contact'} goto={'https://github.com/asocezar'} image={contactImage} />}
       />
       <Modal />
-      <Cards array={characters} />
+      <CardsGrid array={characters} />
       <LoadMoreChars />
     </FavoritesProvider>
   );
