@@ -13,7 +13,7 @@ export const HeaderMenu = ({ childrenOne, childrenTwo }) => {
     <>
       <Styled.Div isInputOnFocus={isInputOnFocus}>
         <MenuIcon setIsMenuOpen={setIsMenuOpen} />
-        <div className="iconMarvel" isInputOnFocus={isInputOnFocus}></div>
+        <div className="iconMarvel" />
         <InputSearch onFocus={() => setIsInputOnFocus(true)} onBlur={() => setIsInputOnFocus(false)} />
       </Styled.Div>
       <Styled.MenuWrapper isMenuOpen={isMenuOpen}>

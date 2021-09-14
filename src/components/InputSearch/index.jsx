@@ -17,15 +17,17 @@ export const InputSearch = ({ onFocus, onBlur }) => {
 
   const handleClick = () => {
     const searchValue = inputValue.current.value;
-    searchValue.length > 0 &&
-      setIsSearching(true) &&
-      fetch(
-        `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${searchValue}&ts=1627160343&apikey=bcc7616374e3d240e7270653f1b2b599&hash=8238c0c73920dc83cfe09aec0b169d26`,
-      )
+    if (searchValue.length > 0) {
+      setIsSearching(true);
+      // eslint-disable-next-line
+      fetch(`https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${searchValue}&ts=1627160343&apikey=bcc7616374e3d240e7270653f1b2b599&hash=8238c0c73920dc83cfe09aec0b169d26`)
         .then((res) => res.json())
-        .then((res) => setSearchedChars(res.data?.results))
+        .then((res) => setSearchedChars(res.data.results))
         .catch((err) => window.alert(err.message));
+    }
   };
+
+  console.log(searchedChars);
 
   const handleConfirm = ({ char }) => {
     //eslint-disable-next-line

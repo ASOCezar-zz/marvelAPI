@@ -22,6 +22,6 @@ export const Card = ({ char, onClick }) => {
 };
 
 Card.propTypes = {
-  char: P.array.isRequired,
+  char: P.object.isRequired,
   onClick: P.func.isRequired,
 };
