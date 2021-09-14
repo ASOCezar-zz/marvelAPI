@@ -2,7 +2,7 @@ import { Div } from './styles';
 import P from 'prop-types';
 
 export const Card = ({ char, onClick }) => {
-  const path = char.thumbnail.path.replace('http', 'https');
+  const path = char.thumbnail?.path.replace('http', 'https');
 
   return (
     <Div key={char.id} onClick={onClick}>

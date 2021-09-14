@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
+import P from 'prop-types';
 import { animated, useSpring } from 'react-spring';
-import { ClickedCharContext } from '../../contexts/ClickedCharProvider/context';
-import { ModalOpenContext } from '../../contexts/ModalOpenProvider/context';
+
 import { CharsContext } from '../../contexts/CharsProvider/context';
 import { comicsFetch } from '../../utils/comicsFetch';
 import { FavoriteStar } from '../../icons/favoriteIcon';
@@ -9,15 +9,9 @@ import { FavoritesContext } from '../../contexts/FavoritesContext/context';
 
 import * as Styled from './styles';
 
-export const Modal = () => {
-  const clickedCharContext = useContext(ClickedCharContext);
-  const { clickedChar, setClickedChar } = clickedCharContext;
-
+export const Modal = ({ isModalOpen, setIsModalOpen, clickedChar, setClickedChar }) => {
   const charsContext = useContext(CharsContext);
   const { timestamps, publicKey, md5 } = charsContext;
-
-  const modalOpenContext = useContext(ModalOpenContext);
-  const { isModalOpen, setIsModalOpen } = modalOpenContext;
 
   const favoritesContext = useContext(FavoritesContext);
   const { favorites, favPressed, setFavPressed } = favoritesContext;
@@ -94,4 +88,11 @@ export const Modal = () => {
       </animated.div>
     </Styled.Container>
   );
+};
+
+Modal.propTypes = {
+  isModalOpen: P.bool.isRequired,
+  setIsModalOpen: P.func.isRequired,
+  clickedChar: P.array.isRequired,
+  setClickedChar: P.func.isRequired,
 };

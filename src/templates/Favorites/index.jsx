@@ -11,6 +11,10 @@ export const Favorites = () => {
   const favoritesContext = useContext(FavoritesContext);
   const { favorites } = favoritesContext;
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [clickedChar, setClickedChar] = useState([]);
+
   // eslint-disable-next-line
   const [limit, setLimit] = useState(favorites.lenght);
 
@@ -20,8 +24,19 @@ export const Favorites = () => {
         childrenOne={<Option name={'Home'} goto={'/'} image={homeImage} />}
         childrenTwo={<Option name={'Dev Contact'} goto={'https://github.com/asocezar'} image={contactImage} />}
       />
-      <Modal />
-      <CardsGrid array={favorites} setLimit={setLimit} />
+      <Modal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        clickedChar={clickedChar}
+        setClickedChar={setClickedChar}
+      />
+      <CardsGrid
+        array={favorites}
+        setLimit={setLimit}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        setClickedChar={setClickedChar}
+      />
     </>
   );
 };

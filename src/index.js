@@ -5,23 +5,17 @@ import Home from './templates/Home/index';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Favorites } from './templates/Favorites';
 import { FavoritesProvider } from './contexts/FavoritesContext';
-import { ModalOpenProvider } from './contexts/ModalOpenProvider/';
 import { CharsProvider } from './contexts/CharsProvider/index';
-import { ClickedCharProvider } from './contexts/ClickedCharProvider/index';
 
 ReactDOM.render(
   <BrowserRouter>
     <FavoritesProvider>
-      <ClickedCharProvider>
-        <ModalOpenProvider>
-          <CharsProvider>
-            <Switch>
-              <Route path="/favorites" component={Favorites} />
-              <Route path="/" component={Home} exact />
-            </Switch>
-          </CharsProvider>
-        </ModalOpenProvider>
-      </ClickedCharProvider>
+      <CharsProvider>
+        <Switch>
+          <Route path="/favorites" component={Favorites} />
+          <Route path="/" component={Home} exact />
+        </Switch>
+      </CharsProvider>
     </FavoritesProvider>
   </BrowserRouter>,
   document.getElementById('root'),

@@ -5,28 +5,14 @@ export const Wrapper = styled.div`
   border-color: black;
   border-style: solid;
   border-width: 2px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
   flex-direction: row;
   margin: 15px;
   width: 95%;
   height: 158px;
   position: relative;
-  -webkit-align-content: center;
-  -ms-flex-line-pack: center;
   align-content: center;
   padding: 2px;
-  -webkit-box-pack: start;
-  -webkit-justify-content: flex-start;
 `;
 
 export const ImageDiv = styled.div`
@@ -34,8 +20,6 @@ export const ImageDiv = styled.div`
   max-height: 140px;
   position: relative;
   inset-inline-start: 26px;
-  -webkit-inset-block-start: 5px;
-  -ms-intb-rlock-start: 5px;
   inset-block-start: 5px;
 
   img {
@@ -50,8 +34,6 @@ export const NameDiv = styled.div`
   max-width: 180px;
   max-height: 50px;
   position: relative;
-  -webkit-inset-block-start: 15px;
-  -ms-intb-rlock-start: 15px;
   inset-block-start: 15px;
   inset-inline-start: 50px;
   font-size: 20px;

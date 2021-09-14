@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 import { CardsGrid } from '../../components/CardsGrid';
 import { HeaderMenu } from '../../components/HeaderMenu';
@@ -14,14 +14,28 @@ const Home = () => {
   const charsContext = useContext(CharsContext);
   const { characters } = charsContext;
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [clickedChar, setClickedChar] = useState([]);
+
   return (
     <FavoritesProvider>
       <HeaderMenu
         childrenOne={<Option name={'Favorites'} goto={'/favorites'} image={favoriteImage} />}
         childrenTwo={<Option name={'Dev Contact'} goto={'https://github.com/asocezar'} image={contactImage} />}
       />
-      <Modal />
-      <CardsGrid array={characters} />
+      <Modal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        clickedChar={clickedChar}
+        setClickedChar={setClickedChar}
+      />
+      <CardsGrid
+        array={characters}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        setClickedChar={setClickedChar}
+      />
       <LoadMoreChars />
     </FavoritesProvider>
   );
