@@ -1,35 +1,46 @@
-import P from 'prop-types';
-import image from '../../icons/Vector_search_icon.svg';
-import cancelIcon from '../../icons/clearIcon.png';
-import { useContext, useRef, useState } from 'react';
-import { Card } from '../Card';
-import { FavoritesContext } from '../../contexts/FavoritesContext/context';
-
 import * as Styled from './styles';
 
-export const InputSearch = ({ onFocus, onBlur }) => {
-  const inputValue = useRef();
-  const [isSearching, setIsSearching] = useState(false);
-  const [searchedChars, setSearchedChars] = useState([]);
+import { useContext, useRef, useState } from 'react';
+import { Card } from '../Card';
+import { FavoritesContext, GlobalFavorites } from '../../contexts/FavoritesContext/context';
 
-  const favoritesContext = useContext(FavoritesContext);
+import { CharsType } from '../../types/CharsType';
+
+import clearIcon from '../../icons/clearIcon.png';
+import searchIcon from '../../icons/Vector_search_icon.svg';
+
+export type InputSearchProps = {
+  onFocus: () => void;
+  onBlur: () => void;
+};
+
+export const InputSearch = ({ onFocus, onBlur }: InputSearchProps) => {
+  const inputValue = useRef<HTMLInputElement>(null);
+  const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [searchedChars, setSearchedChars] = useState<CharsType[]>([]);
+
+  const favoritesContext = useContext<GlobalFavorites>(FavoritesContext);
   const { setFavPressed } = favoritesContext;
 
   const handleClick = () => {
-    const searchValue = inputValue.current.value;
-    if (searchValue.length > 0) {
-      setIsSearching(true);
-      // eslint-disable-next-line
+    if (inputValue.current !== null) {
+      const searchValue = inputValue.current.value;
+      if (searchValue.length > 0) {
+        setIsSearching(true);
+        // eslint-disable-next-line
       fetch(`https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${searchValue}&ts=1627160343&apikey=bcc7616374e3d240e7270653f1b2b599&hash=8238c0c73920dc83cfe09aec0b169d26`)
-        .then((res) => res.json())
-        .then((res) => setSearchedChars(res.data.results))
-        .catch((err) => window.alert(err.message));
+          .then((res) => res.json())
+          .then((res) => setSearchedChars(res.data.results))
+          .catch((err) => window.alert(err.message));
+      }
     }
   };
 
-  console.log(searchedChars);
+  type handleConfirmType = {
+    char: CharsType;
+  };
 
-  const handleConfirm = ({ char }) => {
+  const handleConfirm = ({ char }: handleConfirmType) => {
     //eslint-disable-next-line
     const result = window.confirm(`Gostaria de Favoritar ${char.name}?`);
     if (result) {
@@ -49,12 +60,14 @@ export const InputSearch = ({ onFocus, onBlur }) => {
         <div
           className="image"
           onClick={() => {
-            inputValue.current.value = '';
+            if (inputValue.current !== null) {
+              inputValue.current.value = '';
+            }
             setSearchedChars([]);
             setIsSearching(false);
           }}
         >
-          <img src={cancelIcon} style={{ maxWidth: '20px', cursor: 'pointer' }} />
+          <img src={clearIcon} style={{ maxWidth: '20px', cursor: 'pointer' }} />
         </div>
         <input
           onKeyDown={({ key }) => key === 'Enter' && handleClick()}
@@ -65,7 +78,7 @@ export const InputSearch = ({ onFocus, onBlur }) => {
           placeholder="Search..."
         />
         <div className="image" onClick={() => handleClick()}>
-          <img src={image} style={{ cursor: 'pointer' }} />
+          <img src={searchIcon} style={{ cursor: 'pointer' }} />
         </div>
       </Styled.Input>
       <Styled.Wrapper isSearching={isSearching}>
@@ -88,9 +101,4 @@ export const InputSearch = ({ onFocus, onBlur }) => {
       </Styled.Wrapper>
     </>
   );
-};
-
-InputSearch.propTypes = {
-  onFocus: P.func.isRequired,
-  onBlur: P.func.isRequired,
 };

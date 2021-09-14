@@ -4,26 +4,32 @@ import { CardsGrid } from '../../components/CardsGrid';
 import { HeaderMenu } from '../../components/HeaderMenu';
 import { Modal } from '../../components/Modal';
 import { FavoritesProvider } from '../../contexts/FavoritesContext';
-import { CharsContext } from '../../contexts/CharsProvider/context';
+import { CharsContext, GlobalChars } from '../../contexts/CharsProvider/context';
 import { LoadMoreChars } from '../../components/LoadMoreChars';
-import contactImage from '../../icons/contact.svg';
-import favoriteImage from '../../icons/favorites.svg';
-import { Option } from '../../components/Option';
+import { CharsType } from '../../types/CharsType';
+
+import favoritesImg from '../../icons/favorites.svg';
+import contactImg from '../../icons/contact.svg';
 
 const Home = () => {
-  const charsContext = useContext(CharsContext);
+  const charsContext = useContext<GlobalChars>(CharsContext);
   const { characters } = charsContext;
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  const [clickedChar, setClickedChar] = useState([]);
+  const [clickedChar, setClickedChar] = useState<CharsType | null>(null);
 
   return (
     <FavoritesProvider>
       <HeaderMenu
-        childrenOne={<Option name={'Favorites'} goto={'/favorites'} image={favoriteImage} />}
-        childrenTwo={<Option name={'Dev Contact'} goto={'https://github.com/asocezar'} image={contactImage} />}
+        name={'Favorites'}
+        goto={'/favorites'}
+        image={favoritesImg}
+        name2="Dev Contact"
+        goto2="https://github.com/asocezar"
+        image2={contactImg}
       />
+
       <Modal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}

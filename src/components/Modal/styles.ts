@@ -1,5 +1,6 @@
-import styled, { keyframes } from 'styled-components';
-import miranha from '../../icons/miranha.png';
+import styled, { keyframes, css } from 'styled-components';
+
+import miranhaImg from '../../icons/miranha.png';
 
 const pulsing = keyframes`
   0% {
@@ -20,95 +21,101 @@ const pulsing = keyframes`
 	}
 `;
 
-export const Container = styled.div`
-  position: fixed;
-  display: ${(props) => (props.isModalOpen ? 'flex' : 'none')}
-  height: 100%;
-  width: 100%;
-  z-index: 1;
-  justify-content: center;
+type ContainerType = {
+  isModalOpen: boolean;
+};
 
-  .favNameWrapper {
-    @media(max-width: 767px){
-      width: 90%;
-      margin-top: 105px;
+export const Container = styled.div<ContainerType>`
+  ${({ isModalOpen }) => css`
+    position: fixed;
+      display: ${isModalOpen ? 'flex' : 'none'}
+      height: 100%;
+      width: 100%;
+      z-index: 1;
+      justify-content: center;
+
+      .favNameWrapper {
+        @media(max-width: 767px){
+          width: 90%;
+          margin-top: 105px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-around;
+        }
+      }
+
+      .miranha {
+        display: flex;
+        background-image: url(${miranhaImg});
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 190px;
+        height: 190px;
+        border-radius: 100%;
+        margin-top: 30px;
+        animation: ${pulsing} 1s infinite;
+      }
+
+      .background {
+        width: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+
+        cursor: pointer;
+
+        align-items: center;
+        justify-content: center;
+      }
+      h4 {
+        color: black;
+        font-size: 22px;
+        @media (max-width: 767px){
+          margin: 0;
+        }
+        @media (min-width: 1025px){
+          margin-top: 0;
+        color: black;
+        font-size: 30px;
+        }
+      }
+
+      .content {
+        background-color: #e8e8e8;
+        height: 700px;
+        width: 350px;
+        border-radius: 8px;
+
+      @media (min-width: 1025px){
+        height: 750px;
+        width: 70%;
+        position: absolute;
+        inset-block: 200px;
+      }
+
+      @media(max-width: 767px){
+        height: 550px;
+        width: 80%;
+        align-self: center;
+        position: absolute;
+        inset-block: 200px;
+      }
+
+      @media(max-width:1024px){
+        height: 650px;
+        width: 80%;
+        inset-block: 200px;
+        position: absolute;
+        margin: 0 auto;
+      }
+
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-around;
+
+      padding: 12px;
     }
-  }
-
-  .miranha {
-    display: flex;
-    background-image: url(${miranha});
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 190px;
-    height: 190px;
-    border-radius: 100%;
-    margin-top: 30px;
-    animation: ${pulsing} 1s infinite;
-  }
-
-  .background {
-    width: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-
-    cursor: pointer;
-
-    align-items: center;
-    justify-content: center;
-  }
-  h4 {
-    color: black;
-    font-size: 22px;
-    @media (max-width: 767px){
-      margin: 0;
-    }
-    @media (min-width: 1025px){
-      margin-top: 0;
-    color: black;
-    font-size: 30px;
-    }
-  }
-
-  .content {
-    background-color: #e8e8e8;
-    height: 700px;
-    width: 350px;
-    border-radius: 8px;
-
-  @media (min-width: 1025px){
-    height: 750px;
-    width: 70%;
-    position: absolute;
-    inset-block: 200px;
-  }
-
-  @media(max-width: 767px){
-    height: 550px;
-    width: 80%;
-    align-self: center;
-    position: absolute;
-    inset-block: 200px;
-  }
-
-  @media(max-width:1024px){
-    height: 650px;
-    width: 80%;
-    inset-block: 200px;
-    position: absolute;
-    margin: 0 auto;
-  }
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  padding: 12px;
-  }
+  `};
 `;
 
 export const H3 = styled('h3')`

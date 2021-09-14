@@ -1,13 +1,14 @@
-import loadingIcon from '../../icons/loading.png';
 import { CharsContext } from '../../contexts/CharsProvider/context';
 import { useContext, useEffect, useRef } from 'react';
 import { Div } from './styles';
+
+import loadingIcon from '../../icons/loading.png';
 
 export const LoadMoreChars = () => {
   const charsContext = useContext(CharsContext);
   const { setLimit } = charsContext;
 
-  const sentinel = useRef(null);
+  const sentinel = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const intersectionObserver = new IntersectionObserver((entries) => {
@@ -16,7 +17,9 @@ export const LoadMoreChars = () => {
       }
     });
 
-    intersectionObserver.observe(sentinel.current);
+    if (sentinel.current !== null) {
+      intersectionObserver.observe(sentinel.current);
+    }
 
     return () => intersectionObserver.disconnect();
     //eslint-disable-next-line

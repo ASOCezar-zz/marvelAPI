@@ -2,12 +2,20 @@ import { MenuIcon } from '../MenuIcon';
 import { useState } from 'react';
 import { InputSearch } from '../InputSearch';
 import * as Styled from './styles';
+import { Option } from '../Option';
 
-import P from 'prop-types';
+export type HeaderMenuProps = {
+  name: string;
+  image: string;
+  goto: string;
+  name2: string;
+  image2: string;
+  goto2: string;
+};
 
-export const HeaderMenu = ({ childrenOne, childrenTwo }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isInputOnFocus, setIsInputOnFocus] = useState(false);
+export const HeaderMenu = ({ name, image, goto, name2, image2, goto2 }: HeaderMenuProps) => {
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [isInputOnFocus, setIsInputOnFocus] = useState<boolean>(false);
 
   return (
     <>
@@ -17,14 +25,9 @@ export const HeaderMenu = ({ childrenOne, childrenTwo }) => {
         <InputSearch onFocus={() => setIsInputOnFocus(true)} onBlur={() => setIsInputOnFocus(false)} />
       </Styled.Div>
       <Styled.MenuWrapper isMenuOpen={isMenuOpen}>
-        {childrenOne}
-        {childrenTwo}
+        <Option name={name} image={image} goto={goto} />
+        <Option name={name2} image={image2} goto={goto2} />
       </Styled.MenuWrapper>
     </>
   );
-};
-
-HeaderMenu.propTypes = {
-  childrenOne: P.node.isRequired,
-  childrenTwo: P.node.isRequired,
 };

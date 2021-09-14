@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import { CharsContext } from './context';
-import P from 'prop-types';
 
-export const CharsProvider = ({ children }) => {
+type CharsProviderProps = {
+  children: React.ReactNode;
+};
+
+export const CharsProvider = ({ children }: CharsProviderProps) => {
   const timestamps = 1627160343;
   const publicKey = 'bcc7616374e3d240e7270653f1b2b599';
   const md5 = '8238c0c73920dc83cfe09aec0b169d26';
@@ -30,8 +33,4 @@ export const CharsProvider = ({ children }) => {
       {children}
     </CharsContext.Provider>
   );
-};
-
-CharsProvider.propTypes = {
-  children: P.node.isRequired,
 };

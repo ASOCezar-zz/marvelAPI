@@ -1,7 +1,12 @@
-import { Div } from './styles';
-import P from 'prop-types';
+import { CharsType } from '../../types/CharsType';
+import Div from './styles';
 
-export const Card = ({ char, onClick }) => {
+export type CardProps = {
+  char: CharsType;
+  onClick: () => void;
+};
+
+export const Card = ({ char, onClick }: CardProps) => {
   const path = char.thumbnail?.path.replace('http', 'https');
 
   return (
@@ -19,9 +24,4 @@ export const Card = ({ char, onClick }) => {
       </div>
     </Div>
   );
-};
-
-Card.propTypes = {
-  char: P.object.isRequired,
-  onClick: P.func.isRequired,
 };

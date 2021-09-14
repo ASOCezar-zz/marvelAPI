@@ -1,29 +1,39 @@
-import { useContext, useEffect, useState } from 'react';
-import P from 'prop-types';
+import { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
 
-import { CharsContext } from '../../contexts/CharsProvider/context';
+import { CharsContext, GlobalChars } from '../../contexts/CharsProvider/context';
 import { comicsFetch } from '../../utils/comicsFetch';
 import { FavoriteStar } from '../../icons/favoriteIcon';
-import { FavoritesContext } from '../../contexts/FavoritesContext/context';
+import { FavoritesContext, GlobalFavorites } from '../../contexts/FavoritesContext/context';
 
 import * as Styled from './styles';
+import { CharsType } from '../../types/CharsType';
 
-export const Modal = ({ isModalOpen, setIsModalOpen, clickedChar, setClickedChar }) => {
-  const charsContext = useContext(CharsContext);
+export type ModalProps = {
+  isModalOpen: boolean;
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+  clickedChar: CharsType | null;
+  setClickedChar: Dispatch<SetStateAction<CharsType | null>>;
+};
+
+export const Modal = ({ isModalOpen, setIsModalOpen, clickedChar, setClickedChar }: ModalProps) => {
+  const charsContext = useContext<GlobalChars>(CharsContext);
   const { timestamps, publicKey, md5 } = charsContext;
 
-  const favoritesContext = useContext(FavoritesContext);
+  const favoritesContext = useContext<GlobalFavorites>(FavoritesContext);
   const { favorites, favPressed, setFavPressed } = favoritesContext;
 
-  const [isLoadingComics, setIsLoadingComics] = useState(false);
+  const [isLoadingComics, setIsLoadingComics] = useState<boolean>(false);
 
-  const [comics, setComics] = useState([]);
+  // eslint-disable-next-line
+  const [comics, setComics] = useState<any[]>([]);
 
   useEffect(() => {
-    comicsFetch({ timestamps, publicKey, md5, clickedChar, setComics, setIsLoadingComics });
-    const isFavoriteChar = favorites.find((item) => item.id === clickedChar.id);
-    isFavoriteChar ? setFavPressed(true) : setFavPressed(false);
+    if (clickedChar !== null) {
+      comicsFetch({ timestamps, publicKey, md5, clickedChar, setComics, setIsLoadingComics });
+      const isFavoriteChar = favorites.find((item) => item.id === clickedChar.id);
+      isFavoriteChar ? setFavPressed(true) : setFavPressed(false);
+    }
     // eslint-disable-next-line
   }, [clickedChar, favorites]);
 
@@ -43,14 +53,16 @@ export const Modal = ({ isModalOpen, setIsModalOpen, clickedChar, setClickedChar
     to: { transform: `rotateX(${isLoadingComics ? '0deg' : '360deg'}) infinite` },
   });
 
-  const handleClickFav = () => {
+  const handleClickFav = (): void => {
     setFavPressed((prevState) => !prevState);
   };
 
   useEffect(() => {
-    favPressed
-      ? window.localStorage.setItem(`${clickedChar.id}`, JSON.stringify(clickedChar))
-      : window.localStorage.removeItem(`${clickedChar.id}`);
+    if (clickedChar !== null) {
+      favPressed
+        ? window.localStorage.setItem(`${clickedChar.id}`, JSON.stringify(clickedChar))
+        : window.localStorage.removeItem(`${clickedChar.id}`);
+    }
     // eslint-disable-next-line
   }, [favPressed]);
 
@@ -61,17 +73,17 @@ export const Modal = ({ isModalOpen, setIsModalOpen, clickedChar, setClickedChar
         className="background"
         onClick={() => {
           setIsModalOpen(false);
-          setClickedChar([]);
+          setClickedChar(null);
           setComics([]);
         }}
       ></animated.div>
       <animated.div style={rotation} className="content">
         <Styled.ImageDiv>
-          <img key={clickedChar.id} src={clickedChar.thumbnail?.path + '.' + clickedChar.thumbnail?.extension} />
+          <img key={clickedChar?.id} src={clickedChar?.thumbnail?.path + '.' + clickedChar?.thumbnail?.extension} />
         </Styled.ImageDiv>
         <span className="favNameWrapper">
-          <Styled.H3> {clickedChar.name} </Styled.H3>
-          <FavoriteStar onClick={() => handleClickFav(clickedChar)} favPressed={favPressed} />
+          <Styled.H3> {clickedChar?.name} </Styled.H3>
+          <FavoriteStar onClick={() => handleClickFav()} favPressed={favPressed} />
         </span>
         <h4> Comics </h4>
         {isLoadingComics ? (
@@ -88,11 +100,4 @@ export const Modal = ({ isModalOpen, setIsModalOpen, clickedChar, setClickedChar
       </animated.div>
     </Styled.Container>
   );
-};
-
-Modal.propTypes = {
-  isModalOpen: P.bool.isRequired,
-  setIsModalOpen: P.func.isRequired,
-  clickedChar: P.array.isRequired,
-  setClickedChar: P.func.isRequired,
 };
