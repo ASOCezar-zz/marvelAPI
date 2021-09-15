@@ -44,6 +44,7 @@ const openMenu = () => css`
   background-color: #e8e8e8;
   display: flex;
   flex-direction: column;
+  gap: 50px;
   visibility: visible;
   transition: all 0.3s ease-in-out;
 
@@ -59,10 +60,30 @@ const openMenu = () => css`
 
 export const MenuWrapper = styled.nav<MenuWrapperTypes>`
   ${({ isMenuOpen }) => css`
+    padding-top: 20vh;
+
     a {
       text-decoration: none;
       visibility: hidden;
       transition: all 0.3s ease-in-out;
+      margin: 0 auto;
+      position: relative;
+
+      ::after {
+        content: '';
+        position: absolute;
+        bottom: 0.78rem;
+        width: 0;
+        height: 0.2rem;
+        background: red;
+        left: 50%;
+        transition: all 0.2s ease-in-out;
+      }
+
+      &:hover::after {
+        width: 50%;
+        left: 25%;
+      }
 
       h1,
       img {

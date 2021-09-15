@@ -13,8 +13,10 @@ export const Div = styled.div`
     white-space: nowrap;
 
     img {
-      width: 100px;
-      height: 200px;
+      width: 8vw;
+      height: 10vw;
+      min-width: 50px;
+      min-height: 100px;
       &:hover {
         transform: rotateY(360deg);
         transition: transform 0.5s ease-in-out;
